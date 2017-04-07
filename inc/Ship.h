@@ -40,5 +40,5 @@ public:
 
 	void move(double x, double y);
 
-	void draw(RenderWindow& window) const ;
+	void draw(RenderWindow* window) const ;
 };

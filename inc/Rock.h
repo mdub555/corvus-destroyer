@@ -56,6 +56,6 @@ public:
 
 	vector<Rock> split();
 
-	void draw(RenderWindow& window) const ;
+	void draw(RenderWindow* window) const ;
 
 };

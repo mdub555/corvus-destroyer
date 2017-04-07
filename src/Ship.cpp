@@ -41,6 +41,6 @@ void Ship::move(double x, double y) {
 	return;
 }
 
-void Ship::draw(RenderWindow& window) const {
+void Ship::draw(RenderWindow* window) const {
 	return;
 }

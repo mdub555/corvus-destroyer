@@ -50,6 +50,6 @@ bool Bullet::hit(const Rock& rock) const {
 	return false;
 }
 
-void Bullet::draw(RenderWindow& window) const {
+void Bullet::draw(RenderWindow* window) const {
 	return;
 }

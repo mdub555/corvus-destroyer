@@ -107,7 +107,7 @@ void Rock::shipCollision(const Ship& ship) {
 	return;
 }
 
-void Rock::draw(RenderWindow& window) const {
-	window.draw(rock);
+void Rock::draw(RenderWindow* window) const {
+	window->draw(rock);
 	return;
 }

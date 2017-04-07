@@ -41,5 +41,5 @@ public:
 
 	bool hit(const Rock& rock) const ;
 
-	void draw(RenderWindow& window) const ;
+	void draw(RenderWindow* window) const ;
 };
