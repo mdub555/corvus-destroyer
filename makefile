@@ -9,7 +9,7 @@ OBJDIR = obj
 SOURCES = $(wildcard $(SRCDIR)/*.cpp)
 OBJECTS = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SOURCES))
 
-EXE = asteroids
+EXE = corvus
 
 .phony: depend clean
 

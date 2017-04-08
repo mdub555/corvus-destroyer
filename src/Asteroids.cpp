@@ -23,7 +23,6 @@ int main() {
 
 	Asteroids game;
 	game.setFPS(30);
-	game.startLevel(1);
 
 	while (game.isOpen()) {
 		game.draw();
@@ -47,17 +46,18 @@ void Asteroids::showMenu() {
 }
 
 void Asteroids::startLevel(int level) {
-	Rock rock(3);
-	rocks.push_back(rock);
 	return;
 }
 
 void Asteroids::update() {
+	ship.update();
 	return;
 }
 
 void Asteroids::draw() {
 	window->clear();
+
+	update();
 
 	drawBullets();
 	drawRocks();
@@ -70,9 +70,11 @@ void Asteroids::draw() {
 void Asteroids::checkEvent() {
 	Event event;
 	while (window->pollEvent(event)) {
-		if (event.type == Event::Closed) {
+		switch (event.type) {
+		case Event::Closed:
 			window->close();
-		} else if (event.type == Event::KeyPressed) {
+			break;
+		case Event::KeyPressed:
 			if (Keyboard::isKeyPressed(Keyboard::Q)
 			|| Keyboard::isKeyPressed(Keyboard::Escape)) {
 				window->close();
@@ -80,7 +82,24 @@ void Asteroids::checkEvent() {
 				if (rocks.size() > 0) {
 					splitRock(0);
 				}
+			} else if (Keyboard::isKeyPressed(Keyboard::Right)) {
+				ship.setRotate(1);
+			} else if (Keyboard::isKeyPressed(Keyboard::Left)) {
+				ship.setRotate(-1);
+			} else if (Keyboard::isKeyPressed(Keyboard::Up)) {
+				ship.startAccel();
 			}
+			break;
+		case Event::KeyReleased:
+			if (event.key.code == Keyboard::Right
+				|| event.key.code == Keyboard::Left) {
+				ship.setRotate(0);
+			} else if (event.key.code == Keyboard::Up) {
+				ship.stopAccel();
+			}
+			break;
+		default:
+			break;
 		}
 	}
 	return;
@@ -114,6 +133,7 @@ void Asteroids::drawRocks() {
 }
 
 void Asteroids::drawShip() {
+	ship.draw(window);
 	return;
 }
 
