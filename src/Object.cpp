@@ -77,17 +77,51 @@ double Object::getYAcc() const {
 void Object::update() {
 	xVel += xAcc;
 	yVel += yAcc;
+	if (xVel > MAX_VELOCITY) xVel = MAX_VELOCITY;
+	if (xVel < -MAX_VELOCITY) xVel = -MAX_VELOCITY;
+	if (yVel > MAX_VELOCITY) yVel = MAX_VELOCITY;
+	if (yVel < -MAX_VELOCITY) yVel = -MAX_VELOCITY;
 	xPos += xVel;
 	yPos += yVel;
-	shape->setPosition(xPos, yPos);
+	updatePosition();
 	return;
 }
 
 void Object::updatePosition() {
+	if (xPos < 0) xPos += WINDOW_X;
+	if (xPos >= WINDOW_X) xPos -= WINDOW_X;
+	if (yPos < 0) yPos += WINDOW_Y;
+	if (yPos >= WINDOW_Y) yPos -= WINDOW_Y;
 	shape->setPosition(xPos, yPos);
 }
 
-void Object::draw(RenderWindow* window) const {
+void Object::draw(RenderWindow* window) {
+	FloatRect box = shape->getGlobalBounds();
+	if (box.left <= 0) {
+		shape->setPosition(xPos+WINDOW_X, yPos);
+		window->draw(*shape);
+	}
+	if (box.left+box.width > WINDOW_X) {
+		shape->setPosition(xPos-WINDOW_X, yPos);
+		window->draw(*shape);
+	}
+	if (box.top <= 0) {
+		shape->setPosition(xPos, yPos+WINDOW_Y);
+		window->draw(*shape);
+	}
+	if (box.top+box.height > WINDOW_Y) {
+		shape->setPosition(xPos, yPos-WINDOW_Y);
+		window->draw(*shape);
+	}
+	if (box.left <= 0 && box.top <= 0) {
+		shape->setPosition(xPos+WINDOW_X, yPos+WINDOW_Y);
+		window->draw(*shape);
+	}
+	if (box.left+box.width > WINDOW_X && box.top+box.height > WINDOW_Y) {
+		shape->setPosition(xPos-WINDOW_X, yPos-WINDOW_Y);
+		window->draw(*shape);
+	}
+	updatePosition();
 	window->draw(*shape);
 	return;
 }

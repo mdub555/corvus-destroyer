@@ -120,8 +120,7 @@ void Asteroids::checkEvent() {
 void Asteroids::applyEvents() {
 	if (leftPressed) ship.setRotate(-1);
 	if (rightPressed) ship.setRotate(1);
-	if (leftPressed && rightPressed) ship.setRotate(0);
-	if (!leftPressed && !rightPressed) ship.setRotate(0);
+	if (leftPressed == rightPressed) ship.setRotate(0); // if both are on or both off, don't turn
 	if (upPressed) ship.startAccel();
 	else ship.stopAccel();
 }

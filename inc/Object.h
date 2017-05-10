@@ -8,12 +8,17 @@ using namespace sf;
 
 class Object {
 private:
+	static const int MAX_VELOCITY = 50;
+
 	double xPos;
 	double yPos;
 	double xVel;
 	double yVel;
 	double xAcc;
 	double yAcc;
+
+	static const int WINDOW_X = 1280;
+	static const int WINDOW_Y = 1000;
 
 	void updatePosition();
 
@@ -39,6 +44,6 @@ public:
 	double getYAcc() const ;
 
 	void update();
-	void draw(RenderWindow* window) const ;
+	void draw(RenderWindow* window);
 
 };
