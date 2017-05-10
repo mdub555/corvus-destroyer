@@ -1,7 +1,7 @@
 CC = g++
 MPICC = mpic++
 GFLAGS = -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system
-CFLAGS = -c	-Wall -I$(IDIR)
+CFLAGS = -c	-Wall -I$(IDIR) -std=c++11
 
 IDIR = inc
 SRCDIR = src

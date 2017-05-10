@@ -17,7 +17,7 @@ using namespace sf;
 
 class Bullet {
 private:
-	static const double LENGTH = 10;
+	static constexpr double LENGTH = 10;
 
 	double speed;
 	double direction;

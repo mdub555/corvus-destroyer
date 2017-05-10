@@ -29,6 +29,7 @@ private:
 	void drawLives();
 	void updateRocks();
 	void updateShip();
+	void updateBullets();
 	void splitRock(int index);
 
 public:
@@ -40,8 +41,13 @@ public:
 	void update();
 	void draw();
 	void checkEvent();
+	void applyEvents();
 	void setFPS(int FPS);
 	bool isOpen() const ;
+
+	bool upPressed;
+	bool leftPressed;
+	bool rightPressed;
 
 	RenderWindow* window;
 };

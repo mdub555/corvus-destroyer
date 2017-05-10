@@ -17,7 +17,7 @@ using namespace std;
 
 #include "Asteroids.h"
 
-// loads the font and then plays the game while checking if the user wants to exit the game
+// loads the font and then plays the game
 int main() {
 	srand(time(NULL));
 
@@ -27,6 +27,7 @@ int main() {
 	while (game.isOpen()) {
 		game.draw();
 		game.checkEvent();
+		game.applyEvents();
 	}
 	return 0;
 }
@@ -50,7 +51,9 @@ void Asteroids::startLevel(int level) {
 }
 
 void Asteroids::update() {
-	ship.update();
+	updateShip();
+	updateRocks();
+	updateBullets();
 	return;
 }
 
@@ -78,24 +81,33 @@ void Asteroids::checkEvent() {
 			if (Keyboard::isKeyPressed(Keyboard::Q)
 			|| Keyboard::isKeyPressed(Keyboard::Escape)) {
 				window->close();
-			} else if (Keyboard::isKeyPressed(Keyboard::Space)) {
+			}
+
+			if (Keyboard::isKeyPressed(Keyboard::Space)) {
 				if (rocks.size() > 0) {
 					splitRock(0);
 				}
-			} else if (Keyboard::isKeyPressed(Keyboard::Right)) {
-				ship.setRotate(1);
-			} else if (Keyboard::isKeyPressed(Keyboard::Left)) {
-				ship.setRotate(-1);
-			} else if (Keyboard::isKeyPressed(Keyboard::Up)) {
-				ship.startAccel();
+			}
+
+			if (Keyboard::isKeyPressed(Keyboard::Right)) {
+				rightPressed = true;
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Left)) {
+				leftPressed = true;
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Up)) {
+				upPressed = true;
 			}
 			break;
 		case Event::KeyReleased:
-			if (event.key.code == Keyboard::Right
-				|| event.key.code == Keyboard::Left) {
-				ship.setRotate(0);
-			} else if (event.key.code == Keyboard::Up) {
-				ship.stopAccel();
+			if (event.key.code == Keyboard::Right) {
+				rightPressed = false;
+			}
+			if (event.key.code == Keyboard::Left) {
+				leftPressed = false;
+			}
+			if (event.key.code == Keyboard::Up) {
+				upPressed = false;
 			}
 			break;
 		default:
@@ -103,6 +115,15 @@ void Asteroids::checkEvent() {
 		}
 	}
 	return;
+}
+
+void Asteroids::applyEvents() {
+	if (leftPressed) ship.setRotate(-1);
+	if (rightPressed) ship.setRotate(1);
+	if (leftPressed && rightPressed) ship.setRotate(0);
+	if (!leftPressed && !rightPressed) ship.setRotate(0);
+	if (upPressed) ship.startAccel();
+	else ship.stopAccel();
 }
 
 void Asteroids::setFPS(int FPS) {
@@ -146,5 +167,10 @@ void Asteroids::updateRocks() {
 }
 
 void Asteroids::updateShip() {
+	ship.update();
+	return;
+}
+
+void Asteroids::updateBullets() {
 	return;
 }

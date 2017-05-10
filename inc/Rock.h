@@ -17,7 +17,7 @@ using namespace sf;
 
 class Rock {
 private:
-	static const double PI = 3.14159265;
+	static constexpr double PI = 3.14159265;
 
 	int level;
 	int radius;
