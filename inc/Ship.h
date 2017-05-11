@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "Constants.h"
 #include "Object.h"
 #include <iostream>
 using namespace std;
@@ -16,18 +17,14 @@ using namespace sf;
 
 class Ship : public Object {
 private:
-	static constexpr double PI = 3.14159265;
-
 	static const int HEIGHT = 20;
 	static const int WIDTH = 15;
 
-	static const int ROTATION_SPEED = 6;
+	static constexpr double MAX_VELOCITY = 1800.0/FRAMERATE;
+	static constexpr double ROTATION_SPEED = 180.0/FRAMERATE;
 	int rotation;
-	static constexpr double ACCELERATION = 1;
+	static constexpr double ACCELERATION = 30.0/FRAMERATE;
 	bool accel;
-
-	static const int WINDOW_X = 1280;
-	static const int WINDOW_Y = 1000;
 
 	void createShape();
 	void accelerate();
@@ -41,6 +38,6 @@ public:
 	void update();
 	void startAccel();
 	void stopAccel();
-	void setRotate(int direction);
-	void move(double x, double y);
+	void setRotate(int);
+	void validateSpeed();
 };

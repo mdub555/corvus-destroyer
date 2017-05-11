@@ -1,3 +1,5 @@
+#pragma once
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Mouse.hpp>
 using namespace sf;
@@ -5,12 +7,11 @@ using namespace sf;
 #include "Rock.h"
 #include "Ship.h"
 #include "Bullet.h"
+#include "GameState.h"
+#include "Constants.h"
 
 class Asteroids {
 private:
-	static const int WINDOW_X = 1280;
-	static const int WINDOW_Y = 1000;
-
 	static const int FULL_LIVES = 4;
 	int lives;
 
@@ -20,6 +21,8 @@ private:
 	Ship ship;
 	vector<Rock> rocks;
 	vector<Bullet> bullets;
+
+	GameState state;
 
 	Font myFont;
 
@@ -31,6 +34,7 @@ private:
 	void updateShip();
 	void updateBullets();
 	void splitRock(int index);
+	void shoot();
 
 public:
 	Asteroids();

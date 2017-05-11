@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Constants.h"
+#include "Object.h"
 #include <iostream>
 using namespace std;
 
@@ -8,19 +10,12 @@ using namespace sf;
 
 class Object {
 private:
-	static const int MAX_VELOCITY = 50;
-
 	double xPos;
 	double yPos;
 	double xVel;
 	double yVel;
 	double xAcc;
 	double yAcc;
-
-	static const int WINDOW_X = 1280;
-	static const int WINDOW_Y = 1000;
-
-	void updatePosition();
 
 protected:
 	Shape* shape;
@@ -31,10 +26,13 @@ public:
 	void setPos(double, double);
 	void setXPos(double);
 	void setYPos(double);
+	void setVel(double, double);
 	void setXVel(double);
 	void setYVel(double);
+	void setAcc(double, double);
 	void setXAcc(double);
 	void setYAcc(double);
+	void setRotation(double);
 
 	double getXPos() const ;
 	double getYPos() const ;
@@ -42,8 +40,10 @@ public:
 	double getYVel() const ;
 	double getXAcc() const ;
 	double getYAcc() const ;
+	double getRotation() const ;
 
 	void update();
+	void updatePosition();
 	void draw(RenderWindow* window);
 
 };

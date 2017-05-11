@@ -35,6 +35,8 @@ void Ship::update() {
 	shape->rotate(rotation*ROTATION_SPEED);
 	accelerate();
 	Object::update();
+	validateSpeed();
+	updatePosition();
 	return;
 }
 
@@ -72,8 +74,10 @@ double Ship::getWidth() const {
 	return WIDTH;
 }
 
-// moves each section of the Ship based on the input parameter. There are limits to the possible
-// locations of the Ship, such that the Ship stops at the edges of the screen.
-void Ship::move(double x, double y) {
+void Ship::validateSpeed() {
+	if (getXVel() > MAX_VELOCITY) setXVel(MAX_VELOCITY);
+	if (getXVel() < -MAX_VELOCITY) setXVel(-MAX_VELOCITY);
+	if (getYVel() > MAX_VELOCITY) setYVel(MAX_VELOCITY);
+	if (getYVel() < -MAX_VELOCITY) setYVel(-MAX_VELOCITY);
 	return;
 }

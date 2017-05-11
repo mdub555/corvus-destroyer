@@ -8,48 +8,27 @@
 #include "Bullet.h"
 
 // default constructor
-Bullet::Bullet(double direction) {
+Bullet::Bullet() {
+	createShape();
 }
 
 void Bullet::createShape() {
+	RectangleShape tmpshape(Vector2f(WIDTH, HEIGHT));
+	tmpshape.setFillColor(Color::Transparent);
+	tmpshape.setOutlineColor(Color::White);
+	tmpshape.setOutlineThickness(1);
+	tmpshape.setOrigin(WIDTH/2, HEIGHT/2);
+	shape = new RectangleShape(tmpshape);
 	return;
-}
-
-void Bullet::update() {
-	return;
-}
-
-// move the position of the Bullet
-void Bullet::move(int x, int y) {
-	bullet.move(x, y);
-	return;
-}
-
-// sets the position of the Bullet
-void Bullet::setPos(int x, int y) {
-	bullet.setPosition(x, y);
-	return;
-}
-
-// returns the x-position of the Bullet
-double Bullet::getXPos() const {
-	return bullet.getPosition().x;
-}
-
-// returns the y-position of the Bullet
-double Bullet::getYPos() const {
-	return bullet.getPosition().y;
-}
-
-// returns the width of the Bullet
-double Bullet::getLength() const {
-	return LENGTH;
 }
 
 bool Bullet::hit(const Rock& rock) const {
 	return false;
 }
 
-void Bullet::draw(RenderWindow* window) const {
+void Bullet::setRotation(double angle) {
+	Object::setRotation(angle);
+	setXVel(BULLET_SPEED*cos(getRotation()*PI/180));
+	setYVel(BULLET_SPEED*sin(getRotation()*PI/180));
 	return;
 }

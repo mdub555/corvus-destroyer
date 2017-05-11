@@ -30,6 +30,12 @@ void Object::setYPos(double yPos) {
 	return;
 }
 
+void Object::setVel(double xVel, double yVel) {
+	this->xVel = xVel;
+	this->yVel = yVel;
+	return;
+}
+
 void Object::setXVel(double xVel) {
 	this->xVel = xVel;
 	return;
@@ -40,6 +46,12 @@ void Object::setYVel(double yVel) {
 	return;
 }
 
+void Object::setAcc(double xAcc, double yAcc) {
+	this->xAcc = xAcc;
+	this->yAcc = yAcc;
+	return;
+}
+
 void Object::setXAcc(double xAcc) {
 	this->xAcc = xAcc;
 	return;
@@ -47,6 +59,11 @@ void Object::setXAcc(double xAcc) {
 
 void Object::setYAcc(double yAcc) {
 	this->yAcc = yAcc;
+	return;
+}
+
+void Object::setRotation(double angle) {
+	shape->setRotation(angle);
 	return;
 }
 
@@ -74,16 +91,15 @@ double Object::getYAcc() const {
 	return yAcc;
 }
 
+double Object::getRotation() const {
+	return shape->getRotation();
+}
+
 void Object::update() {
 	xVel += xAcc;
 	yVel += yAcc;
-	if (xVel > MAX_VELOCITY) xVel = MAX_VELOCITY;
-	if (xVel < -MAX_VELOCITY) xVel = -MAX_VELOCITY;
-	if (yVel > MAX_VELOCITY) yVel = MAX_VELOCITY;
-	if (yVel < -MAX_VELOCITY) yVel = -MAX_VELOCITY;
 	xPos += xVel;
 	yPos += yVel;
-	updatePosition();
 	return;
 }
 

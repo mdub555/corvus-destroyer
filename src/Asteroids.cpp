@@ -22,7 +22,7 @@ int main() {
 	srand(time(NULL));
 
 	Asteroids game;
-	game.setFPS(30);
+	game.setFPS(FRAMERATE);
 
 	while (game.isOpen()) {
 		game.draw();
@@ -33,6 +33,7 @@ int main() {
 }
 
 Asteroids::Asteroids() {
+	state = MENU;
 	window = new RenderWindow(VideoMode(WINDOW_X, WINDOW_Y), "Bullet Breaker!");
 	level = -1;
 	lives = FULL_LIVES;
@@ -84,9 +85,12 @@ void Asteroids::checkEvent() {
 			}
 
 			if (Keyboard::isKeyPressed(Keyboard::Space)) {
+				shoot();
+/*
 				if (rocks.size() > 0) {
 					splitRock(0);
 				}
+*/
 			}
 
 			if (Keyboard::isKeyPressed(Keyboard::Right)) {
@@ -141,7 +145,19 @@ void Asteroids::splitRock(int index) {
 	return;
 }
 
+void Asteroids::shoot() {
+	Bullet newBullet;
+	newBullet.setRotation(ship.getRotation());
+	newBullet.setXPos(ship.getXPos());
+	newBullet.setYPos(ship.getYPos());
+	bullets.push_back(newBullet);
+	return;
+}
+
 void Asteroids::drawBullets() {
+	for (unsigned int i = 0; i < bullets.size(); i++) {
+		bullets.at(i).draw(window);
+	}
 	return;
 }
 
@@ -171,5 +187,8 @@ void Asteroids::updateShip() {
 }
 
 void Asteroids::updateBullets() {
+	for (unsigned int i = 0; i < bullets.size(); ++i) {
+		bullets.at(i).update();
+	}
 	return;
 }
