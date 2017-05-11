@@ -37,6 +37,9 @@ Asteroids::Asteroids() {
 	window = new RenderWindow(VideoMode(WINDOW_X, WINDOW_Y), "Bullet Breaker!");
 	level = -1;
 	lives = FULL_LIVES;
+
+	Rock rock(3);
+	rocks.push_back(rock);
 }
 
 void Asteroids::playGame() {
@@ -86,13 +89,12 @@ void Asteroids::checkEvent() {
 
 			if (Keyboard::isKeyPressed(Keyboard::Space)) {
 				shoot();
-/*
-				if (rocks.size() > 0) {
-					splitRock(0);
-				}
-*/
 			}
-
+/*
+			if (Keyboard::isKeyPressed(Keyboard::S)) {
+				if (rocks.size() > 0) splitRock(0);
+			}
+*/
 			if (Keyboard::isKeyPressed(Keyboard::Right)) {
 				rightPressed = true;
 			}
@@ -178,6 +180,15 @@ void Asteroids::drawLives() {
 }
 
 void Asteroids::updateRocks() {
+	for (unsigned int i = 0; i < rocks.size(); ++i) {
+		for (unsigned int j = 0; j < bullets.size(); ++j) {
+			if (bullets.at(j).hit(rocks.at(i))) {
+				splitRock(i);
+				bullets.erase(bullets.begin()+j);
+				break;
+			}
+		}
+	}
 	return;
 }
 

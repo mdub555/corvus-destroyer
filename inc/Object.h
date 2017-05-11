@@ -24,6 +24,7 @@ public:
 	Object();
 
 	void setPos(double, double);
+	void setPos(Vector2f);
 	void setXPos(double);
 	void setYPos(double);
 	void setVel(double, double);

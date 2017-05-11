@@ -19,7 +19,7 @@ using namespace sf;
 class Rock : public Object {
 private:
 	int level;
-	int radius;
+	double radius;
 	static const int NUM_POINTS = 16;
 
 	double speed;
@@ -27,12 +27,14 @@ private:
 	void createShape();
 
 public:
-	Rock(int level);
+	Rock(int);
+	Rock(int, Rock&);
 
 	void update();
 
 	bool checkShipCollision(const Ship& ship);
 	void shipCollision(const Ship& ship);
+	int getRadius() const ;
 
 	vector<Rock> split();
 };

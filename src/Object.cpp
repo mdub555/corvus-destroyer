@@ -18,6 +18,13 @@ void Object::setPos(double xPos, double yPos) {
 	return;
 }
 
+void Object::setPos(Vector2f pos) {
+	this->xPos = pos.x;
+	this->yPos = pos.y;
+	updatePosition();
+	return;
+}
+
 void Object::setXPos(double xPos) {
 	this->xPos = xPos;
 	updatePosition();

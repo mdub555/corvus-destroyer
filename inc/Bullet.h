@@ -19,7 +19,7 @@ class Bullet : public Object {
 private:
 	static constexpr double WIDTH = 10;
 	static constexpr double HEIGHT = 2;
-	static constexpr double BULLET_SPEED = 3000/FRAMERATE;
+	static constexpr double BULLET_SPEED = 2500/FRAMERATE;
 
 	void createShape();
 

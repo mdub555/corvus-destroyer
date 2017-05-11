@@ -14,9 +14,14 @@
 Rock::Rock(int level) {
 //	srand(time(NULL));
 	this->level = level;
-	radius = 10 * level * level;
+	radius = 30 * level;
+//	if (level == 1) radius *= 2;
 	createShape();
-	setPos(WINDOW_X/2, WINDOW_Y/2);
+	setPos(ROCK_SPAWN_POINTS[rand()%4]);
+}
+
+Rock::Rock(int level, Rock& rock) : Rock(level) {
+	setPos(rock.getXPos(), rock.getYPos());
 }
 
 void Rock::createShape() {
@@ -41,8 +46,8 @@ void Rock::createShape() {
 vector<Rock> Rock::split() {
 	vector<Rock> newRocks;
 	if (level > 1) {
-		newRocks.push_back(Rock(level-1));
-		newRocks.push_back(Rock(level-1));
+		newRocks.push_back(Rock(level-1, *this));
+		newRocks.push_back(Rock(level-1, *this));
 	}
 	return newRocks;
 }
@@ -61,4 +66,8 @@ bool Rock::checkShipCollision(const Ship& ship) {
 // of that change
 void Rock::shipCollision(const Ship& ship) {
 	return;
+}
+
+int Rock::getRadius() const {
+	return radius;
 }

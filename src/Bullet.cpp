@@ -23,6 +23,10 @@ void Bullet::createShape() {
 }
 
 bool Bullet::hit(const Rock& rock) const {
+	double xDist = rock.getXPos() - getXPos();
+	double yDist = rock.getYPos() - getYPos();
+	double radius = rock.getRadius();
+	if (xDist*xDist + yDist*yDist < radius*radius) return true;
 	return false;
 }
 
