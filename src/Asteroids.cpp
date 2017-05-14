@@ -89,13 +89,8 @@ void Asteroids::checkEvent() {
 			}
 
 			if (Keyboard::isKeyPressed(Keyboard::Space)) {
-				shoot();
+				spacePressed = true;
 			}
-/*
-			if (Keyboard::isKeyPressed(Keyboard::S)) {
-				if (rocks.size() > 0) splitRock(0);
-			}
-*/
 			if (Keyboard::isKeyPressed(Keyboard::Right)) {
 				rightPressed = true;
 			}
@@ -107,6 +102,9 @@ void Asteroids::checkEvent() {
 			}
 			break;
 		case Event::KeyReleased:
+			if (event.key.code == Keyboard::Space) {
+				spacePressed = false;
+			}
 			if (event.key.code == Keyboard::Right) {
 				rightPressed = false;
 			}
@@ -130,6 +128,10 @@ void Asteroids::applyEvents() {
 	if (leftPressed == rightPressed) ship.setRotate(0); // if both are on or both off, don't turn
 	if (upPressed) ship.startAccel();
 	else ship.stopAccel();
+	if (spacePressed && bulletClock.getElapsedTime().asMilliseconds() > SHOOT_DELAY) {
+		bulletClock.restart();
+		shoot();
+	}
 }
 
 void Asteroids::setFPS(int FPS) {
@@ -153,6 +155,8 @@ void Asteroids::shoot() {
 	newBullet.setRotation(ship.getRotation()); // orient it the same way as the ship
 	newBullet.setXPos(ship.getXPos());         // move it to the ship's location
 	newBullet.setYPos(ship.getYPos());
+	newBullet.addXVel(ship.getXVel());
+	newBullet.addYVel(ship.getYVel());
 	bullets.push_back(newBullet);              // add it to the bullet vector
 	return;
 }
@@ -199,20 +203,31 @@ void Asteroids::updateRocks() {
 	return;
 }
 
-// TODO finish the ship destroy method
 void Asteroids::updateShip() {
 	ship.update();
 	for (unsigned int i = 0; i < rocks.size(); ++i) {
 		if (rocks.at(i).checkShipCollision(ship)) {
-			
+			destroyShip();
 		}
 	}
 	return;
 }
 
+// TODO finish the ship destroy method
+void Asteroids::destroyShip() {
+	cout << "destroyed: " << lives << endl;
+	ship.destroyAnimation();
+	lives--;
+	ship.respawn();
+}
+
 void Asteroids::updateBullets() {
 	for (unsigned int i = 0; i < bullets.size(); ++i) {
 		bullets.at(i).update();
+		if (bullets.at(i).timeAlive() > BULLET_LIFETIME) {
+			bullets.erase(bullets.begin()+i);
+			--i;
+		}
 	}
 	return;
 }

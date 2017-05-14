@@ -144,6 +144,14 @@ void Object::draw(RenderWindow* window) {
 		shape->setPosition(xPos-WINDOW_X, yPos-WINDOW_Y);
 		window->draw(*shape);
 	}
+	if (box.left <= 0 && box.top+box.height > WINDOW_Y) {
+		shape->setPosition(xPos+WINDOW_X, yPos-WINDOW_Y);
+		window->draw(*shape);
+	}
+	if (box.left+box.width > WINDOW_X && box.top <= 0) {
+		shape->setPosition(xPos-WINDOW_X, yPos+WINDOW_Y);
+		window->draw(*shape);
+	}
 	updatePosition();
 	window->draw(*shape);
 	return;

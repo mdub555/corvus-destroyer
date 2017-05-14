@@ -58,6 +58,7 @@ vector<Rock> Rock::split() {
 // FIXME this collision detection is only a rough estimate and should be made more accurate later.
 // It only uses circles as approximations for both the rocks and the ship.
 bool Rock::checkShipCollision(const Ship& ship) {
+	if (ship.isInGodMode()) return false;
 	double diffX = ship.getXPos() - getXPos();
 	double diffY = ship.getYPos() - getYPos();
 	double diffR = radius + ship.getHeight()/2.0;

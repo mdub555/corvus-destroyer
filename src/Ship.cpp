@@ -14,6 +14,7 @@ Ship::Ship() {
 	accel = false;
 	createShape();
 	setPos(WINDOW_X/2, WINDOW_Y/2);
+	inGodMode = false;
 }
 
 void Ship::createShape() {
@@ -80,4 +81,29 @@ void Ship::validateSpeed() {
 	if (getYVel() > MAX_VELOCITY) setYVel(MAX_VELOCITY);
 	if (getYVel() < -MAX_VELOCITY) setYVel(-MAX_VELOCITY);
 	return;
+}
+
+void Ship::destroyAnimation() {
+	return;
+}
+
+void Ship::respawn() {
+	setPos(WINDOW_X/2, WINDOW_Y/2);
+	setRotation(-90);
+	setVel(0, 0);
+	tempGodMode(1500);
+	return;
+}
+
+void Ship::godMode() {
+	inGodMode = true;
+	return;
+}
+
+void Ship::tempGodMode(int duration) {
+	return;
+}
+
+bool Ship::isInGodMode() const {
+	return inGodMode;
 }

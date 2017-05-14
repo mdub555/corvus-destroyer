@@ -22,6 +22,14 @@ void Bullet::createShape() {
 	return;
 }
 
+void Bullet::addXVel(double xVel) {
+	setXVel(getXVel() + xVel);
+}
+
+void Bullet::addYVel(double yVel) {
+	setYVel(getYVel() + yVel);
+}
+
 bool Bullet::hit(const Rock& rock) const {
 	double xDist = rock.getXPos() - getXPos();
 	double yDist = rock.getYPos() - getYPos();
@@ -35,4 +43,8 @@ void Bullet::setRotation(double angle) {
 	setXVel(BULLET_SPEED*cos(getRotation()*PI/180));
 	setYVel(BULLET_SPEED*sin(getRotation()*PI/180));
 	return;
+}
+
+int Bullet::timeAlive() const {
+	return clock.getElapsedTime().asMilliseconds();
 }

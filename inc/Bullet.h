@@ -21,11 +21,17 @@ private:
 	static constexpr double HEIGHT = 2;
 	static constexpr double BULLET_SPEED = 1500/FRAMERATE;
 
+	Clock clock;
+
 	void createShape();
 
 public:
 	Bullet();
 
+	void addXVel(double);
+	void addYVel(double);
+
 	void setRotation(double);
 	bool hit(const Rock&) const ;
+	int timeAlive() const ;
 };

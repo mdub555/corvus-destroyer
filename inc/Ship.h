@@ -20,14 +20,15 @@ private:
 	static const int HEIGHT = 20;
 	static const int WIDTH = 15;
 
-	static constexpr double MAX_VELOCITY = 1800.0/FRAMERATE;
+	static constexpr double MAX_VELOCITY = 1400.0/FRAMERATE;
 	static constexpr double ROTATION_SPEED = 180.0/FRAMERATE;
 	int rotation;
-	static constexpr double ACCELERATION = 30.0/FRAMERATE;
+	static constexpr double ACCELERATION = 20.0/FRAMERATE;
 	bool accel;
 
 	void createShape();
 	void accelerate();
+	bool inGodMode;
 
 public:
 	Ship();
@@ -40,4 +41,9 @@ public:
 	void stopAccel();
 	void setRotate(int);
 	void validateSpeed();
+	void destroyAnimation();
+	void respawn();
+	void godMode();
+	void tempGodMode(int);
+	bool isInGodMode() const ;
 };

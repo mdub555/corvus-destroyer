@@ -21,8 +21,10 @@ private:
 	Ship ship;
 	vector<Rock> rocks;
 	vector<Bullet> bullets;
-
 	stack<GameState> currentState;
+	Clock bulletClock;
+	static const int SHOOT_DELAY = 250;
+	static const int BULLET_LIFETIME = 1000;
 
 	Font myFont;
 
@@ -35,6 +37,7 @@ private:
 	void updateBullets();
 	void splitRock(int index);
 	void shoot();
+	void destroyShip();
 
 public:
 	Asteroids();
@@ -52,6 +55,7 @@ public:
 	bool upPressed;
 	bool leftPressed;
 	bool rightPressed;
+	bool spacePressed;
 
 	RenderWindow* window;
 };
