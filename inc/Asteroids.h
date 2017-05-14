@@ -13,6 +13,8 @@ using namespace sf;
 class Asteroids {
 private:
 	static const int FULL_LIVES = 4;
+	Text livesLabel;
+	void updateLivesLabel();
 	int lives;
 
 	int level;

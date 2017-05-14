@@ -34,6 +34,7 @@ int main() {
 }
 
 Asteroids::Asteroids() {
+	if (!myFont.loadFromFile("data/slkscr.ttf")) return;
 	currentState.push(MAIN_MENU);
 	window = new RenderWindow(VideoMode(WINDOW_X, WINDOW_Y), "Bullet Breaker!");
 	level = -1;
@@ -41,6 +42,12 @@ Asteroids::Asteroids() {
 
 	Rock rock(3);
 	rocks.push_back(rock);
+
+	livesLabel.setFont(myFont);
+	livesLabel.setPosition(10, 10);
+	livesLabel.setColor(Color::White);
+//	livesLabel.setCharacterSize(12);
+	updateLivesLabel();
 }
 
 void Asteroids::playGame() {
@@ -70,6 +77,7 @@ void Asteroids::draw() {
 	drawBullets();
 	drawRocks();
 	drawShip();
+	drawLives();
 
 	window->display();
 	return;
@@ -181,6 +189,13 @@ void Asteroids::drawShip() {
 }
 
 void Asteroids::drawLives() {
+	window->draw(livesLabel);
+	return;
+}
+
+void Asteroids::updateLivesLabel() {
+	string s = "Lives: " + to_string(lives);
+	livesLabel.setString(s);
 	return;
 }
 
@@ -215,9 +230,9 @@ void Asteroids::updateShip() {
 
 // TODO finish the ship destroy method
 void Asteroids::destroyShip() {
-	cout << "destroyed: " << lives << endl;
 	ship.destroyAnimation();
 	lives--;
+	updateLivesLabel();
 	ship.respawn();
 }
 
