@@ -116,9 +116,14 @@ void Object::updatePosition() {
 	if (yPos < 0) yPos += WINDOW_Y;
 	if (yPos >= WINDOW_Y) yPos -= WINDOW_Y;
 	shape->setPosition(xPos, yPos);
+	checkGodMode();
 }
 
 void Object::draw(RenderWindow* window) {
+	if (inGodMode) {
+		flash();
+	}
+
 	FloatRect box = shape->getGlobalBounds();
 	if (box.left <= 0) {
 		shape->setPosition(xPos+WINDOW_X, yPos);
@@ -155,4 +160,31 @@ void Object::draw(RenderWindow* window) {
 	updatePosition();
 	window->draw(*shape);
 	return;
+}
+
+void Object::flash() {
+	if (godModeTimer.getElapsedTime().asMilliseconds() % (2*flashDuration) < flashDuration) {
+		shape->setOutlineColor(Color::Transparent);
+	} else {
+		shape->setOutlineColor(Color::White);
+	}
+	return;
+}
+
+void Object::godMode(int duration) {
+	godModeTimer.restart();
+	godModeDuration = duration;
+	inGodMode = true;
+	return;
+}
+
+void Object::checkGodMode() {
+	if (godModeTimer.getElapsedTime().asMilliseconds() >= godModeDuration) {
+		inGodMode = false;
+	}
+	return;
+}
+
+bool Object::isInGodMode() const {
+	return inGodMode;
 }

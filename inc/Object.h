@@ -17,8 +17,15 @@ private:
 	double xAcc;
 	double yAcc;
 
+	void checkGodMode();
+
+	static const int flashDuration = 125;
+
 protected:
 	Shape* shape;
+	bool inGodMode;
+	int godModeDuration = 0;
+	Clock godModeTimer;
 
 public:
 	Object();
@@ -46,4 +53,8 @@ public:
 	void update();
 	void updatePosition();
 	void draw(RenderWindow* window);
+
+	void godMode(int);
+	bool isInGodMode() const ;
+	void flash();
 };

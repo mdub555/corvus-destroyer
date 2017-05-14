@@ -28,7 +28,6 @@ private:
 
 	void createShape();
 	void accelerate();
-	bool inGodMode;
 
 public:
 	Ship();
@@ -43,7 +42,4 @@ public:
 	void validateSpeed();
 	void destroyAnimation();
 	void respawn();
-	void godMode();
-	void tempGodMode(int);
-	bool isInGodMode() const ;
 };
