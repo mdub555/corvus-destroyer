@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <vector>
+#include <stack>
 #include <string>
 #include <cmath>
 #include <stdlib.h>
@@ -33,7 +34,7 @@ int main() {
 }
 
 Asteroids::Asteroids() {
-	state = MENU;
+	currentState.push(MAIN_MENU);
 	window = new RenderWindow(VideoMode(WINDOW_X, WINDOW_Y), "Bullet Breaker!");
 	level = -1;
 	lives = FULL_LIVES;
@@ -141,18 +142,18 @@ bool Asteroids::isOpen() const {
 }
 
 void Asteroids::splitRock(int index) {
-	vector<Rock> newRocks = rocks.at(0).split();
-	rocks.insert(rocks.end(), newRocks.begin(), newRocks.end());
-	rocks.erase(rocks.begin());
+	vector<Rock> newRocks = rocks.at(index).split();             // get the rocks from the split
+	rocks.insert(rocks.end(), newRocks.begin(), newRocks.end()); // add it to the rock vector
+	rocks.erase(rocks.begin()+index);                            // erase the rock that split
 	return;
 }
 
 void Asteroids::shoot() {
-	Bullet newBullet;
-	newBullet.setRotation(ship.getRotation());
-	newBullet.setXPos(ship.getXPos());
+	Bullet newBullet;                          // make a new bullet
+	newBullet.setRotation(ship.getRotation()); // orient it the same way as the ship
+	newBullet.setXPos(ship.getXPos());         // move it to the ship's location
 	newBullet.setYPos(ship.getYPos());
-	bullets.push_back(newBullet);
+	bullets.push_back(newBullet);              // add it to the bullet vector
 	return;
 }
 
@@ -180,6 +181,12 @@ void Asteroids::drawLives() {
 }
 
 void Asteroids::updateRocks() {
+	// move all the rocks
+	for (unsigned int i = 0; i < rocks.size(); ++i) {
+		rocks.at(i).update();
+	}
+
+	// check if the rock got hit by a bullet
 	for (unsigned int i = 0; i < rocks.size(); ++i) {
 		for (unsigned int j = 0; j < bullets.size(); ++j) {
 			if (bullets.at(j).hit(rocks.at(i))) {
@@ -192,8 +199,14 @@ void Asteroids::updateRocks() {
 	return;
 }
 
+// TODO finish the ship destroy method
 void Asteroids::updateShip() {
 	ship.update();
+	for (unsigned int i = 0; i < rocks.size(); ++i) {
+		if (rocks.at(i).checkShipCollision(ship)) {
+			
+		}
+	}
 	return;
 }
 

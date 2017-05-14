@@ -46,5 +46,4 @@ public:
 	void update();
 	void updatePosition();
 	void draw(RenderWindow* window);
-
 };

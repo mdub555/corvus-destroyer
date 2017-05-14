@@ -22,7 +22,7 @@ private:
 	vector<Rock> rocks;
 	vector<Bullet> bullets;
 
-	GameState state;
+	stack<GameState> currentState;
 
 	Font myFont;
 

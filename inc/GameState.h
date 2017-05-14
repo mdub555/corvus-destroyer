@@ -1,5 +1,5 @@
 #pragma once
 
 enum GameState {
-	MENU, GAME, GAMEOVER, CREDITS
+	MAIN_MENU, PAUSE_MENU, GAME, GAMEOVER, CREDITS
 };

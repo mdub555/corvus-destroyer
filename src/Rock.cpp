@@ -15,9 +15,12 @@ Rock::Rock(int level) {
 //	srand(time(NULL));
 	this->level = level;
 	radius = 30 * level;
+//	speed = 600.0/(level*2)/FRAMERATE;
+	speed = 300.0/(level*2)/FRAMERATE;
 //	if (level == 1) radius *= 2;
 	createShape();
 	setPos(ROCK_SPAWN_POINTS[rand()%4]);
+	setVel(speed*cos(rand()%314/100.0), speed*sin(rand()%314/100.0));
 }
 
 Rock::Rock(int level, Rock& rock) : Rock(level) {
@@ -52,20 +55,14 @@ vector<Rock> Rock::split() {
 	return newRocks;
 }
 
-// updates the position of the Rock based on the x and y velocities
-void Rock::update() {
-	return;
-}
-
+// FIXME this collision detection is only a rough estimate and should be made more accurate later.
+// It only uses circles as approximations for both the rocks and the ship.
 bool Rock::checkShipCollision(const Ship& ship) {
+	double diffX = ship.getXPos() - getXPos();
+	double diffY = ship.getYPos() - getYPos();
+	double diffR = radius + ship.getHeight()/2.0;
+	if (diffX*diffX + diffY*diffY < diffR*diffR) return true;
 	return false;
-}
-
-// changes the velocity of the Rock if it hits the ship. the velocity change is based on the
-// distance from the center of the ship, and uses a sine and cosine function as the parameters
-// of that change
-void Rock::shipCollision(const Ship& ship) {
-	return;
 }
 
 int Rock::getRadius() const {

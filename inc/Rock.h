@@ -30,10 +30,7 @@ public:
 	Rock(int);
 	Rock(int, Rock&);
 
-	void update();
-
-	bool checkShipCollision(const Ship& ship);
-	void shipCollision(const Ship& ship);
+	bool checkShipCollision(const Ship&);
 	int getRadius() const ;
 
 	vector<Rock> split();
