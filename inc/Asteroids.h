@@ -17,7 +17,7 @@ private:
 	void updateLivesLabel();
 	int lives;
 
-	int level;
+	int currentLevel;
 	static const int NUM_LEVELS = 5;
 
 	Ship ship;
@@ -47,6 +47,7 @@ public:
 	void playGame();
 	void showMenu();
 	void startLevel(int level);
+	bool levelEnded();
 	void update();
 	void draw();
 	void checkEvent();

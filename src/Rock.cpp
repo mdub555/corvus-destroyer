@@ -12,15 +12,13 @@
 
 // default constructor
 Rock::Rock(int level) {
-//	srand(time(NULL));
 	this->level = level;
 	radius = 30 * level;
-//	speed = 600.0/(level*2)/FRAMERATE;
-	speed = 300.0/(level*2)/FRAMERATE;
-//	if (level == 1) radius *= 2;
+	speed = 500.0/(level*2)/FRAMERATE;
 	createShape();
 	setPos(ROCK_SPAWN_POINTS[rand()%4]);
-	setVel(speed*cos(rand()%314/100.0), speed*sin(rand()%314/100.0));
+	double direction = (rand()%(2*314))/100.0;
+	setVel(speed*cos(direction), speed*sin(direction));
 }
 
 Rock::Rock(int level, Rock& rock) : Rock(level) {

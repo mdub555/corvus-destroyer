@@ -26,9 +26,7 @@ int main() {
 	game.setFPS(FRAMERATE);
 
 	while (game.isOpen()) {
-		game.draw();
-		game.checkEvent();
-		game.applyEvents();
+		game.playGame();
 	}
 	return 0;
 }
@@ -37,20 +35,23 @@ Asteroids::Asteroids() {
 	if (!myFont.loadFromFile("data/slkscr.ttf")) return;
 	currentState.push(MAIN_MENU);
 	window = new RenderWindow(VideoMode(WINDOW_X, WINDOW_Y), "Bullet Breaker!");
-	level = -1;
+	currentLevel = 1;
 	lives = FULL_LIVES;
-
-	Rock rock(3);
-	rocks.push_back(rock);
 
 	livesLabel.setFont(myFont);
 	livesLabel.setPosition(10, 10);
 	livesLabel.setColor(Color::White);
-//	livesLabel.setCharacterSize(12);
 	updateLivesLabel();
 }
 
 void Asteroids::playGame() {
+	if(levelEnded()) {
+		startLevel(currentLevel++);
+	}
+	update();
+	checkEvent();
+	applyEvents();
+	draw();
 	return;
 }
 
@@ -59,7 +60,17 @@ void Asteroids::showMenu() {
 }
 
 void Asteroids::startLevel(int level) {
+	int numRocks = 3*level+1;
+	for (int i = 0; i < numRocks; ++i) {
+		Rock rock(3);
+		rocks.push_back(rock);
+	}
 	return;
+}
+
+bool Asteroids::levelEnded() {
+	if (rocks.size() == 0) return true;
+	return false;
 }
 
 void Asteroids::update() {
@@ -71,8 +82,6 @@ void Asteroids::update() {
 
 void Asteroids::draw() {
 	window->clear();
-
-	update();
 
 	drawBullets();
 	drawRocks();
