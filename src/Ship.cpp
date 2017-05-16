@@ -87,10 +87,15 @@ void Ship::destroyAnimation() {
 	return;
 }
 
+void Ship::respawnInvinsible() {
+	respawn();
+	godMode(1500);
+	return;
+}
+
 void Ship::respawn() {
 	setPos(WINDOW_X/2, WINDOW_Y/2);
 	setRotation(-90);
 	setVel(0, 0);
-	godMode(1500);
 	return;
 }

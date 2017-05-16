@@ -60,11 +60,12 @@ void Asteroids::showMenu() {
 }
 
 void Asteroids::startLevel(int level) {
-	int numRocks = 3*level+1;
+	int numRocks = 2*level+1;
 	for (int i = 0; i < numRocks; ++i) {
 		Rock rock(3);
 		rocks.push_back(rock);
 	}
+	ship.respawn();
 	return;
 }
 
@@ -242,7 +243,7 @@ void Asteroids::destroyShip() {
 	ship.destroyAnimation();
 	lives--;
 	updateLivesLabel();
-	ship.respawn();
+	ship.respawnInvinsible();
 }
 
 void Asteroids::updateBullets() {

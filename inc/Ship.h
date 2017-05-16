@@ -41,5 +41,6 @@ public:
 	void setRotate(int);
 	void validateSpeed();
 	void destroyAnimation();
+	void respawnInvinsible();
 	void respawn();
 };

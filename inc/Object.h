@@ -23,6 +23,8 @@ private:
 
 protected:
 	Shape* shape;
+	Shape* hitbox;
+	vector<Shape*> hitboxes;
 	bool inGodMode;
 	int godModeDuration = 0;
 	Clock godModeTimer;
