@@ -2,171 +2,95 @@
 #include <iostream>
 using namespace std;
 
-Object::Object() {
-	xPos = 0;
-	yPos = 0;
-	xVel = 0;
-	yVel = 0;
-	xAcc = 0;
-	yAcc = 0;
-}
+Object::Object() {}
 
-void Object::setPos(double xPos, double yPos) {
-	this->xPos = xPos;
-	this->yPos = yPos;
-	updatePosition();
+void Object::setVelocity(const Vector2f& velocity) {
+	m_velocity = velocity;
 	return;
 }
 
-void Object::setPos(Vector2f pos) {
-	this->xPos = pos.x;
-	this->yPos = pos.y;
-	updatePosition();
+void Object::setAcceleration(const Vector2f& acceleration) {
+	m_acceleration = acceleration;
 	return;
 }
 
-void Object::setXPos(double xPos) {
-	this->xPos = xPos;
-	updatePosition();
-	return;
+Vector2f Object::getVelocity() const {
+	return m_velocity;
 }
 
-void Object::setYPos(double yPos) {
-	this->yPos = yPos;
-	updatePosition();
-	return;
-}
-
-void Object::setVel(double xVel, double yVel) {
-	this->xVel = xVel;
-	this->yVel = yVel;
-	return;
-}
-
-void Object::setXVel(double xVel) {
-	this->xVel = xVel;
-	return;
-}
-
-void Object::setYVel(double yVel) {
-	this->yVel = yVel;
-	return;
-}
-
-void Object::setAcc(double xAcc, double yAcc) {
-	this->xAcc = xAcc;
-	this->yAcc = yAcc;
-	return;
-}
-
-void Object::setXAcc(double xAcc) {
-	this->xAcc = xAcc;
-	return;
-}
-
-void Object::setYAcc(double yAcc) {
-	this->yAcc = yAcc;
-	return;
-}
-
-void Object::setRotation(double angle) {
-	shape->setRotation(angle);
-	return;
-}
-
-double Object::getXPos() const {
-	return xPos;
-}
-
-double Object::getYPos() const {
-	return yPos;
-}
-
-double Object::getXVel() const {
-	return xVel;
-}
-
-double Object::getYVel() const {
-	return yVel;
-}
-
-double Object::getXAcc() const {
-	return xAcc;
-}
-
-double Object::getYAcc() const {
-	return yAcc;
-}
-
-double Object::getRotation() const {
-	return shape->getRotation();
+Vector2f Object::getAcceleration() const {
+	return m_acceleration;
 }
 
 void Object::update() {
-	xVel += xAcc;
-	yVel += yAcc;
-	xPos += xVel;
-	yPos += yVel;
+	m_velocity += m_acceleration;
+	move(m_velocity);
+	checkBounds();
 	return;
 }
 
-void Object::updatePosition() {
-	if (xPos < 0) xPos += WINDOW_X;
-	if (xPos >= WINDOW_X) xPos -= WINDOW_X;
-	if (yPos < 0) yPos += WINDOW_Y;
-	if (yPos >= WINDOW_Y) yPos -= WINDOW_Y;
-	shape->setPosition(xPos, yPos);
-	checkGodMode();
+void Object::checkBounds() {
+	float xPos = getPosition().x;
+	float yPos = getPosition().y;
+	if (xPos < 0) setPosition(Vector2f(xPos+WINDOW_X, yPos));
+	if (xPos >= WINDOW_X) setPosition(Vector2f(xPos-WINDOW_X, yPos));
+	if (yPos < 0) setPosition(Vector2f(xPos, yPos+WINDOW_Y));
+	if (yPos >= WINDOW_Y) setPosition(Vector2f(xPos, yPos-WINDOW_Y));
+	return;
 }
 
 void Object::draw(RenderWindow* window) {
+	float xPos = getPosition().x;
+	float yPos = getPosition().y;
+/*
 	if (inGodMode) {
 		flash();
 	}
+*/
 
-	FloatRect box = shape->getGlobalBounds();
+	FloatRect box = getGlobalBounds();
 	if (box.left <= 0) {
-		shape->setPosition(xPos+WINDOW_X, yPos);
-		window->draw(*shape);
+		setPosition(xPos+WINDOW_X, yPos);
+		window->draw(*this);
 	}
 	if (box.left+box.width > WINDOW_X) {
-		shape->setPosition(xPos-WINDOW_X, yPos);
-		window->draw(*shape);
+		setPosition(xPos-WINDOW_X, yPos);
+		window->draw(*this);
 	}
 	if (box.top <= 0) {
-		shape->setPosition(xPos, yPos+WINDOW_Y);
-		window->draw(*shape);
+		setPosition(xPos, yPos+WINDOW_Y);
+		window->draw(*this);
 	}
 	if (box.top+box.height > WINDOW_Y) {
-		shape->setPosition(xPos, yPos-WINDOW_Y);
-		window->draw(*shape);
+		setPosition(xPos, yPos-WINDOW_Y);
+		window->draw(*this);
 	}
 	if (box.left <= 0 && box.top <= 0) {
-		shape->setPosition(xPos+WINDOW_X, yPos+WINDOW_Y);
-		window->draw(*shape);
+		setPosition(xPos+WINDOW_X, yPos+WINDOW_Y);
+		window->draw(*this);
 	}
 	if (box.left+box.width > WINDOW_X && box.top+box.height > WINDOW_Y) {
-		shape->setPosition(xPos-WINDOW_X, yPos-WINDOW_Y);
-		window->draw(*shape);
+		setPosition(xPos-WINDOW_X, yPos-WINDOW_Y);
+		window->draw(*this);
 	}
 	if (box.left <= 0 && box.top+box.height > WINDOW_Y) {
-		shape->setPosition(xPos+WINDOW_X, yPos-WINDOW_Y);
-		window->draw(*shape);
+		setPosition(xPos+WINDOW_X, yPos-WINDOW_Y);
+		window->draw(*this);
 	}
 	if (box.left+box.width > WINDOW_X && box.top <= 0) {
-		shape->setPosition(xPos-WINDOW_X, yPos+WINDOW_Y);
-		window->draw(*shape);
+		setPosition(xPos-WINDOW_X, yPos+WINDOW_Y);
+		window->draw(*this);
 	}
-	updatePosition();
-	window->draw(*shape);
+	setPosition(xPos, yPos);
+	window->draw(*this);
 	return;
 }
 
 void Object::flash() {
 	if (godModeTimer.getElapsedTime().asMilliseconds() % (2*flashDuration) < flashDuration) {
-		shape->setOutlineColor(Color::Transparent);
+		setOutlineColor(Color::Transparent);
 	} else {
-		shape->setOutlineColor(Color::White);
+		setOutlineColor(outlineColor);
 	}
 	return;
 }

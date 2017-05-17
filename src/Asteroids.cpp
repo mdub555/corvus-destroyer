@@ -55,10 +55,6 @@ void Asteroids::playGame() {
 	return;
 }
 
-void Asteroids::showMenu() {
-	return;
-}
-
 void Asteroids::startLevel(int level) {
 	int numRocks = 2*level+1;
 	for (int i = 0; i < numRocks; ++i) {
@@ -171,24 +167,22 @@ void Asteroids::splitRock(int index) {
 void Asteroids::shoot() {
 	Bullet newBullet;                          // make a new bullet
 	newBullet.setRotation(ship.getRotation()); // orient it the same way as the ship
-	newBullet.setXPos(ship.getXPos());         // move it to the ship's location
-	newBullet.setYPos(ship.getYPos());
-	newBullet.addXVel(ship.getXVel());
-	newBullet.addYVel(ship.getYVel());
+	newBullet.setPosition(ship.getPosition()); // move it to the ship's location
+	newBullet.addVelocity(ship.getVelocity());
 	bullets.push_back(newBullet);              // add it to the bullet vector
 	return;
 }
 
 void Asteroids::drawBullets() {
 	for (unsigned int i = 0; i < bullets.size(); i++) {
-		bullets.at(i).draw(window);
+		bullets[i].draw(window);
 	}
 	return;
 }
 
 void Asteroids::drawRocks() {
 	for (unsigned int i = 0; i < rocks.size(); i++) {
-		rocks.at(i).draw(window);
+		rocks[i].draw(window);
 	}
 	return;
 }
@@ -212,7 +206,7 @@ void Asteroids::updateLivesLabel() {
 void Asteroids::updateRocks() {
 	// move all the rocks
 	for (unsigned int i = 0; i < rocks.size(); ++i) {
-		rocks.at(i).update();
+		rocks.at(i).Object::update();
 	}
 
 	// check if the rock got hit by a bullet
@@ -231,7 +225,7 @@ void Asteroids::updateRocks() {
 void Asteroids::updateShip() {
 	ship.update();
 	for (unsigned int i = 0; i < rocks.size(); ++i) {
-		if (rocks.at(i).checkShipCollision(ship)) {
+		if (rocks[i].checkShipCollision(ship)) {
 			destroyShip();
 		}
 	}
@@ -248,7 +242,7 @@ void Asteroids::destroyShip() {
 
 void Asteroids::updateBullets() {
 	for (unsigned int i = 0; i < bullets.size(); ++i) {
-		bullets.at(i).update();
+		bullets.at(i).Object::update();
 		if (bullets.at(i).timeAlive() > BULLET_LIFETIME) {
 			bullets.erase(bullets.begin()+i);
 			--i;

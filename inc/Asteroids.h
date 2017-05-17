@@ -45,7 +45,6 @@ public:
 	Asteroids();
 
 	void playGame();
-	void showMenu();
 	void startLevel(int level);
 	bool levelEnded();
 	void update();

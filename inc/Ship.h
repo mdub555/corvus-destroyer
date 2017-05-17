@@ -30,7 +30,9 @@ private:
 	void accelerate();
 
 public:
-	Ship();
+	explicit Ship(const Vector2f& position = Vector2f(WINDOW_X/2, WINDOW_Y/2));
+	virtual std::size_t getPointCount() const;
+	virtual Vector2f getPoint(std::size_t index) const;
 
 	double getHeight() const ;
 	double getWidth() const ;

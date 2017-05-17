@@ -9,35 +9,25 @@
 #include <cmath>
 
 // default constructor. the Ship is made of a rectangle and two circles.
-Ship::Ship() {
+Ship::Ship(const Vector2f& position) {
 	rotation = 0;
 	accel = false;
-	createShape();
-	setPos(WINDOW_X/2, WINDOW_Y/2);
+	setPosition(position);
 	inGodMode = false;
-}
 
-void Ship::createShape() {
-	ConvexShape tmpshape;
-	tmpshape.setFillColor(Color::Transparent);
-	tmpshape.setOutlineColor(Color::White);
-	tmpshape.setOutlineThickness(1);
-	tmpshape.setPointCount(3);
-	tmpshape.setPoint(0, Vector2f(HEIGHT, WIDTH/2));
-	tmpshape.setPoint(1, Vector2f(0, WIDTH));
-	tmpshape.setPoint(2, Vector2f(0, 0));
-	tmpshape.setOrigin(HEIGHT/3, WIDTH/2);
-	tmpshape.rotate(-90);
-	shape = new ConvexShape(tmpshape);
-	return;
+	setOrigin(Vector2f(HEIGHT/3, WIDTH/2));
+
+	setOutlineThickness(1);
+	outlineColor = Color::White;
+	setOutlineColor(outlineColor);
+	setFillColor(Color::Transparent);
 }
 
 void Ship::update() {
-	shape->rotate(rotation*ROTATION_SPEED);
+	rotate(rotation*ROTATION_SPEED);
 	accelerate();
 	Object::update();
 	validateSpeed();
-	updatePosition();
 	return;
 }
 
@@ -56,11 +46,9 @@ void Ship::startAccel() {
 
 void Ship::accelerate() {
 	if (accel) {
-		setXAcc(ACCELERATION*cos(shape->getRotation()*PI/180));
-		setYAcc(ACCELERATION*sin(shape->getRotation()*PI/180));
+		setAcceleration(Vector2f(ACCELERATION*cos(getRotation()*PI/180), ACCELERATION*sin(getRotation()*PI/180)));
 	} else {
-		setXAcc(0);
-		setYAcc(0);
+		setAcceleration(Vector2f(0, 0));
 	}
 	return;
 }
@@ -76,10 +64,12 @@ double Ship::getWidth() const {
 }
 
 void Ship::validateSpeed() {
-	if (getXVel() > MAX_VELOCITY) setXVel(MAX_VELOCITY);
-	if (getXVel() < -MAX_VELOCITY) setXVel(-MAX_VELOCITY);
-	if (getYVel() > MAX_VELOCITY) setYVel(MAX_VELOCITY);
-	if (getYVel() < -MAX_VELOCITY) setYVel(-MAX_VELOCITY);
+	double xVel = getVelocity().x;
+	double yVel = getVelocity().y;
+	if (xVel > MAX_VELOCITY)  setVelocity(Vector2f(xVel,  MAX_VELOCITY));
+	if (xVel < -MAX_VELOCITY) setVelocity(Vector2f(xVel, -MAX_VELOCITY));
+	if (yVel > MAX_VELOCITY)  setVelocity(Vector2f(yVel,  MAX_VELOCITY));
+	if (yVel < -MAX_VELOCITY) setVelocity(Vector2f(yVel, -MAX_VELOCITY));
 	return;
 }
 
@@ -94,8 +84,21 @@ void Ship::respawnInvinsible() {
 }
 
 void Ship::respawn() {
-	setPos(WINDOW_X/2, WINDOW_Y/2);
+	setPosition(Vector2f(WINDOW_X/2, WINDOW_Y/2));
 	setRotation(-90);
-	setVel(0, 0);
+	setVelocity(Vector2f(0, 0));
 	return;
+}
+
+std::size_t Ship::getPointCount() const {
+	return 3;
+}
+
+Vector2f Ship::getPoint(std::size_t index) const {
+	switch (index) {
+		default:
+		case 0: return Vector2f(HEIGHT, WIDTH/2);
+		case 1: return Vector2f(0, WIDTH);
+		case 2: return Vector2f(0, 0);
+	}
 }

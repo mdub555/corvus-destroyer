@@ -16,31 +16,30 @@ Rock::Rock(int level) {
 	radius = 30 * level;
 	speed = 500.0/(level*2)/FRAMERATE;
 	createShape();
-	setPos(ROCK_SPAWN_POINTS[rand()%4]);
+	setPosition(ROCK_SPAWN_POINTS[rand()%4]);
 	double direction = (rand()%(2*314))/100.0;
-	setVel(speed*cos(direction), speed*sin(direction));
+	setVelocity(Vector2f(speed*cos(direction), speed*sin(direction)));
+
+	// format instructions
+	setOutlineThickness(1);
+	outlineColor = Color::White;
+	setOutlineColor(outlineColor);
+	setFillColor(Color::Transparent);
 }
 
 Rock::Rock(int level, Rock& rock) : Rock(level) {
-	setPos(rock.getXPos(), rock.getYPos());
+	setPosition(Vector2f(rock.getPosition().x, rock.getPosition().y));
 }
 
 void Rock::createShape() {
-	ConvexShape tmpshape;
-	tmpshape.setOrigin(radius, radius);
-	tmpshape.setPointCount(NUM_POINTS);
-	tmpshape.setFillColor(Color::Transparent);
-	tmpshape.setOutlineColor(Color::White);
-	tmpshape.setOutlineThickness(1);
-	for (int i = 0; i < NUM_POINTS; ++i) {
-		double pointRadius = radius + rand()%(5*level*level)-(3*level*level);
+	setOrigin(radius, radius);
+	for (unsigned int i = 0; i < NUM_POINTS; ++i) {
+		double pointRadius = radius + rand()%(12*level)-(6*level);
 		double angle = 2.*PI*i/NUM_POINTS;
 		double pointX = pointRadius*cos(angle);
 		double pointY = pointRadius*sin(angle);
-		Vector2f point(tmpshape.getOrigin().x + pointX, tmpshape.getOrigin().y + pointY);
-		tmpshape.setPoint(i, point);
+		m_points.push_back(Vector2f(getOrigin().x+pointX, getOrigin().y+pointY));
 	}
-	shape = new ConvexShape(tmpshape);
 	return;
 }
 
@@ -57,8 +56,8 @@ vector<Rock> Rock::split() {
 // It only uses circles as approximations for both the rocks and the ship.
 bool Rock::checkShipCollision(const Ship& ship) {
 	if (ship.isInGodMode()) return false;
-	double diffX = ship.getXPos() - getXPos();
-	double diffY = ship.getYPos() - getYPos();
+	double diffX = ship.getPosition().x - getPosition().x;
+	double diffY = ship.getPosition().y - getPosition().y;
 	double diffR = radius + ship.getHeight()/2.0;
 	if (diffX*diffX + diffY*diffY < diffR*diffR) return true;
 	return false;
@@ -66,4 +65,12 @@ bool Rock::checkShipCollision(const Ship& ship) {
 
 int Rock::getRadius() const {
 	return radius;
+}
+
+std::size_t Rock::getPointCount() const {
+	return NUM_POINTS;
+}
+
+Vector2f Rock::getPoint(std::size_t index) const {
+	return m_points[index];
 }
