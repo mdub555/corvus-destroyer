@@ -26,6 +26,7 @@ void Object::update() {
 	m_velocity += m_acceleration;
 	move(m_velocity);
 	checkBounds();
+	checkGodMode();
 	return;
 }
 
@@ -42,11 +43,9 @@ void Object::checkBounds() {
 void Object::draw(RenderWindow* window) {
 	float xPos = getPosition().x;
 	float yPos = getPosition().y;
-/*
 	if (inGodMode) {
 		flash();
 	}
-*/
 
 	FloatRect box = getGlobalBounds();
 	if (box.left <= 0) {

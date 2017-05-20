@@ -20,6 +20,7 @@ using namespace sf;
 class Rock : public Object {
 private:
 	static const unsigned int NUM_POINTS = 16;
+	static const unsigned int NUM_SPLIT_ROCKS = 3;
 	int    level;
 	double radius;
 	double speed;

@@ -26,7 +26,7 @@ private:
 	stack<GameState> currentState;
 	Clock bulletClock;
 	static const int SHOOT_DELAY = 250;
-	static const int BULLET_LIFETIME = 1000;
+	static const int BULLET_LIFETIME = 1250;
 
 	Font myFont;
 

@@ -46,8 +46,9 @@ void Rock::createShape() {
 vector<Rock> Rock::split() {
 	vector<Rock> newRocks;
 	if (level > 1) {
-		newRocks.push_back(Rock(level-1, *this));
-		newRocks.push_back(Rock(level-1, *this));
+		for (unsigned int i = 0; i < NUM_SPLIT_ROCKS; ++i) {
+			newRocks.push_back(Rock(level-1, *this));
+		}
 	}
 	return newRocks;
 }

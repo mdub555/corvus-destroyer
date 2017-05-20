@@ -56,12 +56,11 @@ void Asteroids::playGame() {
 }
 
 void Asteroids::startLevel(int level) {
-	int numRocks = 2*level+1;
+	int numRocks = 2*level-1;
 	for (int i = 0; i < numRocks; ++i) {
-		Rock rock(3);
-		rocks.push_back(rock);
+		rocks.push_back(Rock(3));
 	}
-	ship.respawn();
+	ship.godMode(2000);
 	return;
 }
 

@@ -16,6 +16,7 @@ Ship::Ship(const Vector2f& position) {
 	inGodMode = false;
 
 	setOrigin(Vector2f(HEIGHT/3, WIDTH/2));
+	setRotation(-90);
 
 	setOutlineThickness(1);
 	outlineColor = Color::White;

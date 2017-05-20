@@ -22,7 +22,7 @@ protected:
 	Color outlineColor;
 	Color fillColor;
 
-	bool inGodMode;
+	bool inGodMode = false;
 	int godModeDuration = 0;
 	Clock godModeTimer;
 
