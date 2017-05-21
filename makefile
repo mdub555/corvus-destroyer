@@ -13,7 +13,7 @@ EXE = corvus
 
 .phony: depend clean
 
-all: $(SOURCES) $(EXE)
+all: $(EXE)
 
 $(EXE): $(OBJECTS)
 	$(CC) $^ -o $@ $(GFLAGS)
@@ -22,4 +22,4 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
-	rm $(EXE) $(OBJDIR)/*.o
+	rm $(EXE) $(OBJECTS)
