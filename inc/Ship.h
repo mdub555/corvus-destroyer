@@ -5,7 +5,8 @@
  * Date: April 7, 2017
  */
 
-#pragma once
+#ifndef SHIP_H
+#define SHIP_H
 
 #include "Constants.h"
 #include "Object.h"
@@ -46,3 +47,5 @@ public:
 	void respawnInvinsible();
 	void respawn();
 };
+
+#endif

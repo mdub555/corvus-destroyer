@@ -5,7 +5,8 @@
  * Date: April 7, 2017
  */
 
-#pragma once
+#ifndef BULLET_H
+#define BULLET_H
 
 #include "Object.h"
 #include "Rock.h"
@@ -38,3 +39,5 @@ public:
 	bool hit(const Rock&) const ;
 	int timeAlive() const ;
 };
+
+#endif

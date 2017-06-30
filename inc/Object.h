@@ -1,4 +1,5 @@
-#pragma once
+#ifndef OBJECT_H
+#define OBJECT_H
 
 #include "Constants.h"
 #include "Object.h"
@@ -42,3 +43,5 @@ public:
 	bool isInGodMode() const ;
 	void flash();
 };
+
+#endif

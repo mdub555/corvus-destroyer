@@ -5,7 +5,8 @@
  * Date: April 7, 2017
  */
 
-#pragma once
+#ifndef ROCK_H
+#define ROCK_H
 
 #include "Constants.h"
 #include "Object.h"
@@ -40,3 +41,5 @@ public:
 
 	vector<Rock> split();
 };
+
+#endif

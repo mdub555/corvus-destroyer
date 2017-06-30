@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
 
 #include <SFML/Graphics.hpp>
 using namespace sf;
@@ -11,3 +12,5 @@ static const Vector2f ROCK_SPAWN_POINTS[4] = { Vector2f(100,100),
 											   Vector2f(WINDOW_X-100, 100),
 											   Vector2f(100, WINDOW_Y-100),
 											   Vector2f(WINDOW_X-100, WINDOW_Y-100) };
+
+#endif
