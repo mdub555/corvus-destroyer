@@ -22,8 +22,7 @@ private:
   int currentLevel;
   static const int NUM_LEVELS = 5;
 
-  Menu mainMenu;
-  Menu pauseMenu;
+  vector<Menu> menus;
 
   Ship ship;
   vector<Rock> rocks;

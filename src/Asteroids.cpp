@@ -87,9 +87,9 @@ void Asteroids::draw() {
     drawShip();
     drawLives();
   } else if (currentState.top() == GameState::MAIN_MENU) {
-    mainMenu.draw(window);
+    //mainMenu.draw(window);
   } else if (currentState.top() == GameState::PAUSE_MENU) {
-    pauseMenu.draw(window);
+    //pauseMenu.draw(window);
   } else if (currentState.top() == GameState::GAMEOVER) {
     drawGameOver();
   } else {

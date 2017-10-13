@@ -1,0 +1,6 @@
+For collision detection: add check for bounding box, and if that is true, then do more accurate
+check.
+
+Add level label.
+
+Add menu system, and implement that into the drawing method in a smart way.
