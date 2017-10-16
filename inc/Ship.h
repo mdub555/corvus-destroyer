@@ -5,16 +5,13 @@
  * Date: April 7, 2017
  */
 
-#ifndef SHIP_H
-#define SHIP_H
+#ifndef _SHIP_H_
+#define _SHIP_H_
 
-#include "Constants.h"
+#include "Util.h"
 #include "Object.h"
-#include <iostream>
-using namespace std;
 
 #include <SFML/Graphics.hpp>
-using namespace sf;
 
 class Ship : public Object {
 private:
@@ -31,9 +28,9 @@ private:
 	void accelerate();
 
 public:
-	explicit Ship(const Vector2f& position = Vector2f(WINDOW_X/2, WINDOW_Y/2));
+	explicit Ship(const sf::Vector2f& position = sf::Vector2f(WINDOW_WIDTH/2, WINDOW_HEIGHT/2));
 	virtual std::size_t getPointCount() const;
-	virtual Vector2f getPoint(std::size_t index) const;
+	virtual sf::Vector2f getPoint(std::size_t index) const;
 
 	double getHeight() const ;
 	double getWidth() const ;

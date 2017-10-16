@@ -18,17 +18,17 @@ Rock::Rock(int level) {
 	createShape();
 	setPosition(ROCK_SPAWN_POINTS[rand()%4]);
 	double direction = (rand()%(2*314))/100.0;
-	setVelocity(Vector2f(speed*cos(direction), speed*sin(direction)));
+	setVelocity(sf::Vector2f(speed*cos(direction), speed*sin(direction)));
 
 	// format instructions
 	setOutlineThickness(1);
-	outlineColor = Color::White;
+	outlineColor = sf::Color::White;
 	setOutlineColor(outlineColor);
-	setFillColor(Color::Transparent);
+	setFillColor(sf::Color::Transparent);
 }
 
 Rock::Rock(int level, Rock& rock) : Rock(level) {
-	setPosition(Vector2f(rock.getPosition().x, rock.getPosition().y));
+	setPosition(sf::Vector2f(rock.getPosition().x, rock.getPosition().y));
 }
 
 void Rock::createShape() {
@@ -38,13 +38,13 @@ void Rock::createShape() {
 		double angle = 2.*PI*i/NUM_POINTS;
 		double pointX = pointRadius*cos(angle);
 		double pointY = pointRadius*sin(angle);
-		m_points.push_back(Vector2f(getOrigin().x+pointX, getOrigin().y+pointY));
+		m_points.push_back(sf::Vector2f(getOrigin().x+pointX, getOrigin().y+pointY));
 	}
 	return;
 }
 
-vector<Rock> Rock::split() {
-	vector<Rock> newRocks;
+std::vector<Rock> Rock::split() {
+	std::vector<Rock> newRocks;
 	if (level > 1) {
 		for (unsigned int i = 0; i < NUM_SPLIT_ROCKS; ++i) {
 			newRocks.push_back(Rock(level-1, *this));
@@ -72,6 +72,6 @@ std::size_t Rock::getPointCount() const {
 	return NUM_POINTS;
 }
 
-Vector2f Rock::getPoint(std::size_t index) const {
+sf::Vector2f Rock::getPoint(std::size_t index) const {
 	return m_points[index];
 }

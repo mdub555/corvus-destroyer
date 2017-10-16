@@ -5,35 +5,31 @@
  * Date: April 7, 2017
  */
 
-#ifndef BULLET_H
-#define BULLET_H
+#ifndef _BULLET_H_
+#define _BULLET_H_
 
 #include "Object.h"
 #include "Rock.h"
 
-#include <iostream>
-using namespace std;
-
 #include <SFML/Graphics.hpp>
-using namespace sf;
 
 class Bullet : public Object {
 private:
-	Vector2f m_size;
+	sf::Vector2f m_size;
 	static constexpr double WIDTH = 10;
 	static constexpr double HEIGHT = 2;
 	static constexpr double BULLET_SPEED = 1500/FRAMERATE;
 
-	Clock clock;
+	sf::Clock clock;
 
 public:
-	Bullet(const Vector2f& position = Vector2f(0, 0));
-	void setSize(const Vector2f& size);
-	const Vector2f& getSize() const;
+	Bullet(const sf::Vector2f& position = sf::Vector2f(0, 0));
+	void setSize(const sf::Vector2f& size);
+	const sf::Vector2f& getSize() const;
 	virtual std::size_t getPointCount() const;
-	virtual Vector2f getPoint(std::size_t index) const;
+	virtual sf::Vector2f getPoint(std::size_t index) const;
 
-	void addVelocity(const Vector2f&);
+	void addVelocity(const sf::Vector2f&);
 
 	void setRotation(float);
 	bool hit(const Rock&) const ;

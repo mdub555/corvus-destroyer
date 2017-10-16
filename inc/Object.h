@@ -1,18 +1,14 @@
-#ifndef OBJECT_H
-#define OBJECT_H
+#ifndef _OBJECT_H_
+#define _OBJECT_H_
 
-#include "Constants.h"
-#include "Object.h"
-#include <iostream>
-using namespace std;
+#include "Util.h"
 
 #include <SFML/Graphics.hpp>
-using namespace sf;
 
-class Object : public Shape {
+class Object : public sf::Shape {
 private:
-	Vector2f m_velocity;
-	Vector2f m_acceleration;
+	sf::Vector2f m_velocity;
+	sf::Vector2f m_acceleration;
 
 	void checkGodMode();
 	void checkBounds();
@@ -20,24 +16,24 @@ private:
 	static const int flashDuration = 125;
 
 protected:
-	Color outlineColor;
-	Color fillColor;
+	sf::Color outlineColor;
+	sf::Color fillColor;
 
 	bool inGodMode = false;
 	int godModeDuration = 0;
-	Clock godModeTimer;
+	sf::Clock godModeTimer;
 
 public:
 	Object();
 
-	void setVelocity(const Vector2f&);
-	void setAcceleration(const Vector2f&);
+	void setVelocity(const sf::Vector2f&);
+	void setAcceleration(const sf::Vector2f&);
 
-	Vector2f getVelocity() const ;
-	Vector2f getAcceleration() const ;
+	sf::Vector2f getVelocity() const ;
+	sf::Vector2f getAcceleration() const ;
 
 	void update();
-	void draw(RenderWindow* window);
+	void draw(sf::RenderWindow* window);
 
 	void godMode(int);
 	bool isInGodMode() const ;

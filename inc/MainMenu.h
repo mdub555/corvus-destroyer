@@ -1,15 +1,15 @@
-#ifndef MAINMENU_H
-#define MAINMENU_H
+#ifndef _MAINMENU_H_
+#define _MAINMENU_H_
 
 #include "Menu.h"
 #include "Button.h"
-#include <iostream>
-using namespace std;
 
 class MainMenu : public Menu {
 private:
+   void createMenu();
+
 public:
-  MainMenu();
+   MainMenu();
 };
 
 #endif

@@ -1,29 +1,34 @@
-#ifndef MENU_H
-#define MENU_H
+#ifndef _MENU_H_
+#define _MENU_H_
 
-#include <iostream>
 #include <vector>
-using namespace std;
 
 #include <SFML/Graphics.hpp>
 #include <Button.h>
-using namespace sf;
 
 class Menu {
 private:
-  string label;
-  vector<Button> buttons;
+   sf::Text label;
+   sf::FloatRect labelBound;
+   std::vector<Button*> buttons;
 
-  virtual void createMenu();
+   const int SPACING = 10;
+   int totalHeight;
+
+   virtual void createMenu() = 0;
+
+protected:
+   void calculateTotalHeight();
+   void arrangeButtons();
 
 public:
-  Menu();
+   Menu();
 
-  void setLabel(const string label);
+   void setLabel(const std::string label);
+   void setFont(sf::Font &font);
 
-  void addButton(Button button);
-  void organizeButtons();
-  void draw(RenderWindow* window);
+   void addButton(Button *button);
+   void draw(sf::RenderWindow* window);
 
 };
 

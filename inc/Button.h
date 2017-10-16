@@ -1,25 +1,31 @@
-#ifndef BUTTON_H
-#define BUTTON_H
-
-#include <iostream>
-using namespace std;
+#ifndef _BUTTON_H_
+#define _BUTTON_H_
 
 #include <SFML/Graphics.hpp>
-using namespace sf;
 
-class Button : public RectangleShape {
+class Button : public sf::RectangleShape {
 private:
-  Text label;
+   sf::Text label;
+   sf::FloatRect textBound;
+
+   void centerText();
 
 public:
-  Button();
-  Button(const Vector2f& size);
+   Button();
+   Button(const std::string label);
+   Button(const sf::Vector2f& size);
 
-  void setLabel(const string label);
-  void setLabelColor(const Color labelColor);
+   void setLabel(const std::string label);
+   void setLabelColor(const sf::Color labelColor);
+   void setFont(sf::Font &font);
+   void setPosition(sf::Vector2f position);
+   void setPosition(float x, float y);
 
-  bool pressed(Event event);
-  void draw(RenderWindow* window);
+   float getTextHeight() const;
+
+   bool pressed(sf::Event event);
+   void resize();
+   void draw(sf::RenderWindow* window);
 };
 
 #endif
