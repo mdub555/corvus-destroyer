@@ -68,10 +68,10 @@ int Rock::getRadius() const {
 	return radius;
 }
 
-std::size_t Rock::getPointCount() const {
+unsigned int Rock::getPointCount() const override {
 	return NUM_POINTS;
 }
 
-sf::Vector2f Rock::getPoint(std::size_t index) const {
+sf::Vector2f Rock::getPoint(unsigned int index) const override {
 	return m_points[index];
 }
