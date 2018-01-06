@@ -30,8 +30,8 @@ private:
 public:
 	Rock(int);
 	Rock(int, Rock&);
-	virtual unsigned int getPointCount() const override;
-	virtual sf::Vector2f getPoint(unsigned int index) const override;
+	virtual std::size_t getPointCount() const override;
+	virtual sf::Vector2f getPoint(std::size_t index) const override;
 
 	bool checkShipCollision(const Ship&);
 	int getRadius() const ;

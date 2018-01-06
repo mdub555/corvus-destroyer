@@ -14,11 +14,63 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <string.h>
 
 #include "Asteroids.h"
 
+// must add additional cases when more modes are added
+void setMode(Modes mode, bool value) {
+   std::string modeName;
+   switch (mode) {
+   case Modes::DEBUG:
+      modeName = "debug";
+      break;
+   case Modes::GOD:
+      modeName = "god";
+      break;
+   default:
+      printf("[ERROR] Must add more cases to the setMode() function.\n");
+      break;
+   }
+   printf("Setting %s mode to ", modeName.c_str());
+   printf("%s.\n", value ? "true" : "false");
+   MODES[mode] = value;
+}
+
+void parseCommandLineArguments(int numArgs, char* argv[]) {
+   for (int i = 0; i < NUM_MODES; i++) MODES[i] = false;
+   for (int i = 0; i < numArgs; i++) {
+      if (argv[i][0] == '-') {
+         if (argv[i][1] == '-') {
+            if (strcmp(argv[i], "--debug") == 0) {
+               setMode(Modes::DEBUG, true);
+            } else if (strcmp(argv[i], "--godmode") == 0) {
+               setMode(Modes::GOD, true);
+            } else {
+               printf("Command line argument '%s' is not valid.\n", argv[i]);
+               exit(EXIT_FAILURE);
+            }
+         } else {
+            switch (argv[i][1]) {
+            case 'd':
+               setMode(Modes::DEBUG, true);
+               break;
+            case 'g':
+               setMode(Modes::GOD, true);
+               break;
+            default:
+               printf("Command line argument '%s' is not valid.\n", argv[i]);
+               exit(EXIT_FAILURE);
+               break;
+            }
+         }
+      }
+   }
+}
+
 // loads the font and then plays the game
-int main() {
+int main(int argc, char* argv[]) {
+   parseCommandLineArguments(argc, argv);
    srand(time(NULL));
 
    Asteroids game;
@@ -47,7 +99,8 @@ Asteroids::Asteroids() {
 
    livesLabel.setFont(myFont);
    livesLabel.setPosition(10, 10);
-   livesLabel.setFillColor(sf::Color::White);
+   //livesLabel.setFillColor(sf::Color::White);
+   livesLabel.setColor(sf::Color::White);
    updateLivesLabel();
 }
 
@@ -92,17 +145,25 @@ void Asteroids::update() {
 void Asteroids::draw() {
    window->clear();
 
-   if (currentState.top() == GameState::GAME) {
+   switch (currentState.top()) {
+   case GameState::GAME:
       drawGame();
-   } else if (currentState.top() == GameState::MAIN_MENU) {
+      break;
+   case GameState::MAIN_MENU:
       //mainMenu.draw(window);
-   } else if (currentState.top() == GameState::PAUSE_MENU) {
+      break;
+   case GameState::PAUSE_MENU:
       drawGame();
       menus[PAUSE_MENU]->draw(window);
-   } else if (currentState.top() == GameState::GAMEOVER) {
+      break;
+   case GameState::GAMEOVER:
       drawGameOver();
-   } else {
+      break;
+   case GameState::CREDITS:
       drawCredits();
+      break;
+   default:
+      break;
    }
 
    window->display();

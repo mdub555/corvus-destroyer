@@ -11,6 +11,9 @@
 #include "Menu.h"
 #include "PauseMenu.h"
 
+// this is here because it needs to be defined in ONE file after the declaration in Util.h
+bool MODES[NUM_MODES];
+
 class Asteroids {
 private:
    static const int FULL_LIVES = 4;

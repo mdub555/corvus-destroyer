@@ -2,6 +2,7 @@
 #define _BUTTON_H_
 
 #include <SFML/Graphics.hpp>
+#include "Util.h"
 
 class Button : public sf::RectangleShape {
 private:

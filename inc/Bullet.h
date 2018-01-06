@@ -26,8 +26,8 @@ public:
 	Bullet(const sf::Vector2f& position = sf::Vector2f(0, 0));
 	void setSize(const sf::Vector2f& size);
 	const sf::Vector2f& getSize() const;
-	virtual unsigned int getPointCount() const override;
-	virtual sf::Vector2f getPoint(unsigned int index) const override;
+	virtual std::size_t getPointCount() const override;
+	virtual sf::Vector2f getPoint(std::size_t index) const override;
 
 	void addVelocity(const sf::Vector2f&);
 

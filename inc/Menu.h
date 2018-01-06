@@ -16,6 +16,7 @@ private:
    int totalHeight;
 
    virtual void createMenu() = 0;
+   void getLabelBound();
 
 protected:
    void calculateTotalHeight();

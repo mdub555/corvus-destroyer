@@ -29,8 +29,8 @@ private:
 
 public:
 	explicit Ship(const sf::Vector2f& position = sf::Vector2f(WINDOW_WIDTH/2, WINDOW_HEIGHT/2));
-	virtual unsigned int getPointCount() const override;
-	virtual sf::Vector2f getPoint(unsigned int index) const override;
+	virtual std::size_t getPointCount() const override;
+	virtual sf::Vector2f getPoint(std::size_t index) const override;
 
 	double getHeight() const ;
 	double getWidth() const ;

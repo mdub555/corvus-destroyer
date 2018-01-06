@@ -91,11 +91,11 @@ void Ship::respawn() {
    return;
 }
 
-unsigned int Ship::getPointCount() const override {
+std::size_t Ship::getPointCount() const {
    return 4;
 }
 
-sf::Vector2f Ship::getPoint(std::size_t index) const override {
+sf::Vector2f Ship::getPoint(std::size_t index) const {
    switch (index) {
       default:
       case 0: return sf::Vector2f(HEIGHT, WIDTH/2);

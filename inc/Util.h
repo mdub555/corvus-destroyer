@@ -2,6 +2,9 @@
 #define _UTIL_H_
 
 #include <SFML/Graphics.hpp>
+#include <string.h>
+#include <string>
+#include <stdio.h>
 
 static const int FRAMERATE = 60;
 static constexpr double PI = 3.14159265;
@@ -20,5 +23,13 @@ enum GameState {
 enum KeyButtons {
    UP, LEFT, RIGHT, SPACE
 };
+
+static const int NUM_MODES = 2;
+
+enum Modes {
+   DEBUG, GOD
+};
+
+extern bool MODES[NUM_MODES];
 
 #endif

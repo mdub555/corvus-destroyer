@@ -55,11 +55,11 @@ const sf::Vector2f& Bullet::getSize() const {
    return m_size;
 }
 
-unsigned int Bullet::getPointCount() const override {
+std::size_t Bullet::getPointCount() const {
    return 4;
 }
 
-sf::Vector2f Bullet::getPoint(unsigned int index) const override {
+sf::Vector2f Bullet::getPoint(std::size_t index) const {
    switch (index) {
       default:
       case 0: return sf::Vector2f(0, 0);

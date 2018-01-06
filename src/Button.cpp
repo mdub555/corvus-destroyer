@@ -1,6 +1,10 @@
 #include "Button.h"
 #include <stdio.h>
 
+// TODO: at button resize, setting text, or initialization, do something to put the origin of the
+// rectangle in the center of the rectangle. at the moment, this is not being done in any logical
+// way, and setting button position isn't working.
+
 Button::Button() : Button(sf::Vector2f(10, 10)) {}
 
 Button::Button(std::string label) {
@@ -29,7 +33,8 @@ void Button::centerText() {
 }
 
 void Button::setLabelColor(const sf::Color color) {
-   label.setFillColor(color);
+   //label.setFillColor(color);
+   label.setColor(color);
    return;
 }
 
@@ -39,8 +44,9 @@ void Button::setFont(sf::Font &font) {
 }
 
 void Button::setPosition(sf::Vector2f position) {
+   if (MODES[Modes::DEBUG]) printf("Setting position to: (%f, %f)\n", position.x, position.y);
    sf::RectangleShape::setPosition(position);
-   label.setPosition(position);
+   centerText();
 }
 
 void Button::setPosition(float x, float y) {
@@ -59,8 +65,9 @@ bool Button::pressed(sf::Event event) {
 
 void Button::resize() {
    centerText();
-   printf("%f %f\n", textBound.width, textBound.height);
+   //printf("%f %f\n", textBound.width, textBound.height);
    this->setSize(sf::Vector2f(textBound.width + 10, textBound.height + 5));
+   this->setOrigin(this->getPosition()+(this->getSize())/2.f);
 }
 
 void Button::draw(sf::RenderWindow* window) {
