@@ -1,6 +1,19 @@
-For collision detection: add check for bounding box, and if that is true, then do more accurate
-check.
+Improve collision detection with ship (not really needed, but makes it better)
+ - add check for bounding box
+ - if that is true, do more accurate check
 
-Add level label.
+Add a HUD
+ - Add level label
+ - Make lives label better (and part of HUD instead of randomly coded)
+ - Add points counter
 
 Add menu system, and implement that into the drawing method in a smart way.
+ - Add indicator to button that is selected
+ - Add background box to menu so game doesn't make it hard to see
+ - Make buttons actually do something
+ - Add non-mouse button usage, i.e. arrow keys and enter or space
+ - Add main menu
+
+Replayability
+ - Add high score screen
+   - file input and output

@@ -85,8 +85,6 @@ int main(int argc, char* argv[]) {
 Asteroids::Asteroids() {
    if (!myFont.loadFromFile("data/slkscr.ttf")) return;
    currentState.push(GameState::GAME);
-   // TODO: take the next line out
-   currentState.push(GameState::PAUSE_MENU);
    window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Bullet Breaker!");
    currentLevel = 1;
    lives = FULL_LIVES;
@@ -152,7 +150,7 @@ void Asteroids::draw() {
       drawGame();
       break;
    case GameState::MAIN_MENU:
-      //mainMenu.draw(window);
+      menus[PAUSE_MENU]->draw(window);
       break;
    case GameState::PAUSE_MENU:
       drawGame();
@@ -234,7 +232,8 @@ void Asteroids::checkEvent() {
 }
 
 void Asteroids::applyEvents() {
-   if (currentState.top() == GameState::GAME) {
+   switch (currentState.top()) {
+   case GameState::GAME:
       if (buttonsPressed[KeyButtons::LEFT]) ship.setRotate(-1);
       if (buttonsPressed[KeyButtons::RIGHT]) ship.setRotate(1);
       if (buttonsPressed[KeyButtons::LEFT] == buttonsPressed[KeyButtons::RIGHT])
@@ -246,6 +245,9 @@ void Asteroids::applyEvents() {
          bulletClock.restart();
          shoot();
       }
+      break;
+   default:
+      break;
    }
 }
 
@@ -259,7 +261,7 @@ bool Asteroids::isOpen() const {
 }
 
 void Asteroids::splitRock(int index) {
-   std::vector<Rock> newRocks = rocks.at(index).split();             // get the rocks from the split
+   std::vector<Rock> newRocks = rocks.at(index).split();        // get the rocks from the split
    rocks.insert(rocks.end(), newRocks.begin(), newRocks.end()); // add it to the rock vector
    rocks.erase(rocks.begin()+index);                            // erase the rock that split
    return;
