@@ -44,7 +44,6 @@ void Button::centerText() {
    // constants
    this->label.setOrigin(textBound.left + textBound.width/2.0f,
                          textBound.top  + textBound.height/2.0f);
-   //label.setOrigin(textBound.width/2.f, textBound.height);
    label.setPosition(this->getPosition());
 }
 
