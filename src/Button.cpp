@@ -5,16 +5,30 @@
 // rectangle in the center of the rectangle. at the moment, this is not being done in any logical
 // way, and setting button position isn't working.
 
+// if button has had their size specified, don't alter that.
+// else, if button text or font changes, resize the button to fit
+// on changing the buttons size in any way, center the text in the button
+
+// if size is set, set label and center text
+// else, set label, resize button and center text
+
+// default constructor, nothing known
 Button::Button() : Button(sf::Vector2f(10, 10)) {}
 
+// create button with known label
 Button::Button(std::string label) {
    setLabel(label);
-   resize();
+   resizeToText();
+   centerText();
+   //setFillColor(sf::Color::Red);
+   setOutlineColor(sf::Color::Red);
 }
 
+// create button with known size
 Button::Button(const sf::Vector2f& size) {
-   setSize(size);
-   setOrigin(sf::Vector2f(size.x/2, size.y/2));
+   setLabel("");
+   this->setSize(size);
+   centerText();
 }
 
 void Button::setLabel(const std::string string) {
@@ -26,10 +40,12 @@ void Button::setLabel(const std::string string) {
 void Button::centerText() {
    // make the text bounding box
    textBound = label.getLocalBounds();
-   // set the origin as the middle of the bounding box
-   label.setOrigin(textBound.left + textBound.width/2.0f,
-                   textBound.top  + textBound.height/2.0f);
-   label.setPosition(this->getOrigin());
+   // set the origin as the middle of the bounding box. for some reason it works better with these
+   // constants
+   this->label.setOrigin(textBound.left + textBound.width/2.0f,
+                         textBound.top  + textBound.height/2.0f);
+   //label.setOrigin(textBound.width/2.f, textBound.height);
+   label.setPosition(this->getPosition());
 }
 
 void Button::setLabelColor(const sf::Color color) {
@@ -40,7 +56,7 @@ void Button::setLabelColor(const sf::Color color) {
 
 void Button::setFont(sf::Font &font) {
    label.setFont(font);
-   resize();
+   resizeToText();
 }
 
 void Button::setPosition(sf::Vector2f position) {
@@ -63,16 +79,22 @@ bool Button::pressed(sf::Event event) {
    return false;
 }
 
-void Button::resize() {
+// resize button and put the origin in the center. do nothing with the text.
+void Button::setSize(const sf::Vector2f& size) {
+   sf::RectangleShape::setSize(size);
+   this->setOrigin(size/2.f);
+}
+
+void Button::resizeToText() {
+   textBound = label.getLocalBounds();
+   sf::Vector2f temp(textBound.width, textBound.height);
+   setSize(temp);
    centerText();
-   //printf("%f %f\n", textBound.width, textBound.height);
-   this->setSize(sf::Vector2f(textBound.width + 10, textBound.height + 5));
-   this->setOrigin(this->getPosition()+(this->getSize())/2.f);
 }
 
 void Button::draw(sf::RenderWindow* window) {
    // draw button
-   window->draw(*this);
+   //window->draw(*this);
 
    // draw text
    window->draw(label);

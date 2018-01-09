@@ -10,6 +10,7 @@ private:
    sf::FloatRect textBound;
 
    void centerText();
+   //void initialize(const std::string label, const sf::Vector2f& size);
 
 public:
    Button();
@@ -25,7 +26,8 @@ public:
    float getTextHeight() const;
 
    bool pressed(sf::Event event);
-   void resize();
+   void resizeToText();
+   void setSize(const sf::Vector2f& size);
    void draw(sf::RenderWindow* window);
 };
 

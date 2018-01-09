@@ -85,6 +85,8 @@ int main(int argc, char* argv[]) {
 Asteroids::Asteroids() {
    if (!myFont.loadFromFile("data/slkscr.ttf")) return;
    currentState.push(GameState::GAME);
+   // TODO: take the next line out
+   currentState.push(GameState::PAUSE_MENU);
    window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Bullet Breaker!");
    currentLevel = 1;
    lives = FULL_LIVES;

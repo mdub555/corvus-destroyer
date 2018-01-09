@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 Menu::Menu() {
-   label.setString("");
+   setLabel("");
 }
 
 void Menu::setLabel(const std::string label) {
@@ -25,6 +25,7 @@ void Menu::setFont(sf::Font &font) {
    for (int i = 0; i < (int)buttons.size(); i++) {
       buttons[i]->setFont(font);
    }
+   arrangeButtons();
 }
 
 void Menu::addButton(Button *button) {
@@ -47,7 +48,7 @@ void Menu::calculateTotalHeight() {
    totalHeight = 0;
 
    totalHeight += labelBound.height;
-   totalHeight += SPACING; // make title further from buttons
+   totalHeight += SPACING/2; // make title further from buttons
    for (int i = 0; i < (int)buttons.size(); i++) {
       totalHeight += SPACING;
       totalHeight += buttons[i]->getSize().y;
@@ -57,11 +58,11 @@ void Menu::calculateTotalHeight() {
 void Menu::arrangeButtons() {
    calculateTotalHeight();
    int currentY = (WINDOW_HEIGHT - totalHeight) / 2;
-   label.setPosition(WINDOW_WIDTH/2, currentY);// + labelBound.height/2);
-   currentY += labelBound.height + SPACING;
+   label.setPosition(WINDOW_WIDTH/2, currentY + labelBound.height/2);
+   currentY += labelBound.height + SPACING/2;
    for (int i = 0; i < (int)buttons.size(); i++) {
       currentY += SPACING;
-      buttons[i]->Button::setPosition(WINDOW_WIDTH/2, currentY + buttons[i]->getSize().y/2);
-      currentY += buttons[i]->getSize().y/2;
+      buttons[i]->Button::setPosition(WINDOW_WIDTH/2, currentY + buttons[i]->getSize().y);
+      currentY += buttons[i]->getSize().y;
    }
 }
