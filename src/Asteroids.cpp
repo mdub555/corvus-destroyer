@@ -99,8 +99,7 @@ Asteroids::Asteroids() {
 
    livesLabel.setFont(myFont);
    livesLabel.setPosition(10, 10);
-   //livesLabel.setFillColor(sf::Color::White);
-   livesLabel.setColor(sf::Color::White);
+   livesLabel.setFillColor(sf::Color::White);
    updateLivesLabel();
 }
 

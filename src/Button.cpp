@@ -48,8 +48,7 @@ void Button::centerText() {
 }
 
 void Button::setLabelColor(const sf::Color color) {
-   //label.setFillColor(color);
-   label.setColor(color);
+   label.setFillColor(color);
    return;
 }
 
