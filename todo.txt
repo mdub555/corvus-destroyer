@@ -17,3 +17,10 @@ Add menu system, and implement that into the drawing method in a smart way.
 Replayability
  - Add high score screen
    - file input and output
+
+Engine Generality
+ - Make a room class
+   - Holds GUI
+   - Holds background
+   - Holds everything to draw
+ - Add command line argument reader

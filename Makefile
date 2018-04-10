@@ -1,30 +1,48 @@
 CC = g++
 MPICC = mpic++
 GFLAGS = -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system
-CFLAGS = -c	-Wall -I$(IDIR) -std=c++11
+CFLAGS = -Wall -I$(IDIR) -g -std=c++11
 
 IDIR = inc
 SRCDIR = src
 OBJDIR = obj
-SOURCES = $(wildcard $(SRCDIR)/*.cpp)
-OBJECTS = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SOURCES))
-#OBJECTS = $(OBJDIR)/Asteroids.o $(OBJDIR)/Bullet.o $(OBJDIR)/Button.o $(OBJDIR)/Object.o $(OBJDIR)/Rock.o $(OBJDIR)/Ship.o
+SRCS = $(shell find $(SRCDIR) -name '*.cpp') # source files
+OBJS = $(SRCS:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o) # object files
+DEPS = $(SRCS:$(SRCDIR)/%.cpp=$(OBJDIR)/%.d) # dependancy files
 
+# Name of the executable
 EXE = corvus
 
 .phony: all depend clean
 
+# default target
 all: $(EXE)
 
-$(EXE): $(OBJECTS)
-	$(CC) $^ -o $@ $(GFLAGS)
+# create the executable from all the object files
+$(EXE): $(OBJS)
+	$(CC) $(CFLAGS) $^ -o $@ $(GFLAGS)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.cpp | $(OBJDIR)/
+# run the program
+run: $(EXE)
+	./$(EXE)
+
+# ensure the obj directories are created
+$(SRCS): | $(OBJDIR)
+
+# mirror the directory structure of src/ under obj/
+$(OBJDIR):
+	mkdir -p $(shell find $(SRCDIR) -type d | sed "s/src/obj/")
+
+# build each of the object files
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-# make the object directory if it doesn't already exist
-$(OBJDIR)/:
-	mkdir -p $@
-
+# remove the executable and the object files
 clean:
-	rm $(EXE) $(OBJECTS)
+	rm $(EXE) $(OBJS)
+
+# auto dependancy management
+-include $(DEPS)
+
+# allow for printing out variables, good for debugging
+print-% : ; @echo $* = $($*)
