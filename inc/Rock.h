@@ -8,7 +8,7 @@
 #ifndef _ROCK_H_
 #define _ROCK_H_
 
-#include "Util.h"
+#include "util/constants.h"
 #include "Object.h"
 #include "Ship.h"
 #include <vector>

@@ -2,7 +2,7 @@
 #define _BUTTON_H_
 
 #include <SFML/Graphics.hpp>
-#include "Util.h"
+#include "util/constants.h"
 
 class Button : public sf::RectangleShape {
 private:
@@ -11,6 +11,9 @@ private:
 
    void centerText();
    //void initialize(const std::string label, const sf::Vector2f& size);
+   static const int MARGIN = 5;
+   bool highlighted = false;
+   MenuAction action;
 
 public:
    Button();
@@ -22,6 +25,7 @@ public:
    void setFont(sf::Font &font);
    void setPosition(sf::Vector2f position);
    void setPosition(float x, float y);
+   void setHighlight(const bool highlight);
 
    float getTextHeight() const;
 
@@ -29,6 +33,8 @@ public:
    void resizeToText();
    void setSize(const sf::Vector2f& size);
    void draw(sf::RenderWindow* window);
+   MenuAction getAction() const;
+   void setAction(const MenuAction action);
 };
 
 #endif

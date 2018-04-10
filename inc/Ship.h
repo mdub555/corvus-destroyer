@@ -8,7 +8,7 @@
 #ifndef _SHIP_H_
 #define _SHIP_H_
 
-#include "Util.h"
+#include "util/constants.h"
 #include "Object.h"
 
 #include <SFML/Graphics.hpp>

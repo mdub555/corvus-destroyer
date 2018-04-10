@@ -1,7 +1,7 @@
 #ifndef _OBJECT_H_
 #define _OBJECT_H_
 
-#include "Util.h"
+#include "util/constants.h"
 
 #include <SFML/Graphics.hpp>
 

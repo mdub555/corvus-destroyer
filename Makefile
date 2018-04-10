@@ -1,7 +1,7 @@
 CC = g++
 MPICC = mpic++
 GFLAGS = -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system
-CFLAGS = -Wall -I$(IDIR) -g -std=c++11
+CFLAGS = -Wall -MMD -MP -I$(IDIR) -g -std=c++11
 
 IDIR = inc
 SRCDIR = src
@@ -39,7 +39,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 
 # remove the executable and the object files
 clean:
-	rm $(EXE) $(OBJS)
+	rm -rf $(EXE)* $(OBJDIR)/
 
 # auto dependancy management
 -include $(DEPS)

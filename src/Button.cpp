@@ -20,13 +20,13 @@ Button::Button(std::string label) {
    setLabel(label);
    resizeToText();
    centerText();
-   //setFillColor(sf::Color::Red);
-   setOutlineColor(sf::Color::Red);
+   setFillColor(sf::Color::Transparent);
+   setOutlineColor(sf::Color::White);
+   setOutlineThickness(MARGIN/1.5);
 }
 
 // create button with known size
-Button::Button(const sf::Vector2f& size) {
-   setLabel("");
+Button::Button(const sf::Vector2f& size) : Button("") {
    this->setSize(size);
    centerText();
 }
@@ -85,16 +85,35 @@ void Button::setSize(const sf::Vector2f& size) {
 
 void Button::resizeToText() {
    textBound = label.getLocalBounds();
-   sf::Vector2f temp(textBound.width, textBound.height);
+   sf::Vector2f temp(textBound.width+2*MARGIN, textBound.height+2*MARGIN);
    setSize(temp);
    centerText();
 }
 
 void Button::draw(sf::RenderWindow* window) {
    // draw button
-   //window->draw(*this);
+   window->draw(*this);
 
    // draw text
    window->draw(label);
    return;
+}
+
+void Button::setHighlight(const bool highlight) {
+   highlighted = highlight;
+   if (highlight) {
+      setFillColor(sf::Color::White);
+      setLabelColor(sf::Color::Black);
+   } else {
+      setFillColor(sf::Color::Transparent);
+      setLabelColor(sf::Color::White);
+   }
+}
+
+MenuAction Button::getAction() const {
+   return action;
+}
+
+void Button::setAction(const MenuAction action) {
+   this->action = action;
 }

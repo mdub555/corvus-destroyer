@@ -17,6 +17,7 @@
 #include <string.h>
 
 #include "Asteroids.h"
+#include "util/flags.h"
 
 // must add additional cases when more modes are added
 void setMode(Modes mode, bool value) {
@@ -32,45 +33,15 @@ void setMode(Modes mode, bool value) {
       printf("[ERROR] Must add more cases to the setMode() function.\n");
       break;
    }
-   printf("Setting %s mode to ", modeName.c_str());
-   printf("%s.\n", value ? "true" : "false");
+   printf("Setting %s mode to %s\n", modeName.c_str(), value ? "true" : "false");
    MODES[mode] = value;
 }
 
-void parseCommandLineArguments(int numArgs, char* argv[]) {
-   for (int i = 0; i < NUM_MODES; i++) MODES[i] = false;
-   for (int i = 0; i < numArgs; i++) {
-      if (argv[i][0] == '-') {
-         if (argv[i][1] == '-') {
-            if (strcmp(argv[i], "--debug") == 0) {
-               setMode(Modes::DEBUG, true);
-            } else if (strcmp(argv[i], "--godmode") == 0) {
-               setMode(Modes::GOD, true);
-            } else {
-               printf("Command line argument '%s' is not valid.\n", argv[i]);
-               exit(EXIT_FAILURE);
-            }
-         } else {
-            switch (argv[i][1]) {
-            case 'd':
-               setMode(Modes::DEBUG, true);
-               break;
-            case 'g':
-               setMode(Modes::GOD, true);
-               break;
-            default:
-               printf("Command line argument '%s' is not valid.\n", argv[i]);
-               exit(EXIT_FAILURE);
-               break;
-            }
-         }
-      }
-   }
-}
-
 // loads the font and then plays the game
-int main(int argc, char* argv[]) {
-   parseCommandLineArguments(argc, argv);
+int main(int argc, char** argv) {
+   FlagOptions flags = parse_flags(argc, argv);
+   setMode(Modes::GOD, flags.godmode);
+   setMode(Modes::DEBUG, flags.debug);
    srand(time(NULL));
 
    Asteroids game;
@@ -201,6 +172,12 @@ void Asteroids::checkEvent() {
          if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
             buttonsPressed[KeyButtons::UP] = true;
          }
+         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+            buttonsPressed[KeyButtons::DOWN] = true;
+         }
+         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+            buttonsPressed[KeyButtons::ENTER] = true;
+         }
          if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
             if (currentState.top() == GameState::PAUSE_MENU) {
                currentState.pop();
@@ -221,6 +198,12 @@ void Asteroids::checkEvent() {
          }
          if (event.key.code == sf::Keyboard::Up) {
             buttonsPressed[KeyButtons::UP] = false;
+         }
+         if (event.key.code == sf::Keyboard::Down) {
+            buttonsPressed[KeyButtons::DOWN] = false;
+         }
+         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+            buttonsPressed[KeyButtons::ENTER] = false;
          }
          break;
       default:
@@ -243,6 +226,34 @@ void Asteroids::applyEvents() {
           bulletClock.getElapsedTime().asMilliseconds() > SHOOT_DELAY) {
          bulletClock.restart();
          shoot();
+      }
+      break;
+   case GameState::PAUSE_MENU:
+      if (buttonsPressed[KeyButtons::UP]) menus[GameState::PAUSE_MENU]->navigateUp();
+      if (buttonsPressed[KeyButtons::DOWN]) menus[GameState::PAUSE_MENU]->navigateDown();
+      if (buttonsPressed[KeyButtons::ENTER])
+         handleMenu(GameState::PAUSE_MENU, menus[GameState::PAUSE_MENU]->select());
+      break;
+   default:
+      break;
+   }
+}
+
+void Asteroids::handleMenu(const GameState state, const MenuAction action, const GameState newState) {
+   switch (state) {
+   case GameState::PAUSE_MENU:
+      switch(action) {
+      case MenuAction::POP:
+         currentState.pop();
+         break;
+      case MenuAction::PUSH:
+         currentState.push(newState);
+         break;
+      case MenuAction::EXIT:
+         exit(EXIT_SUCCESS);
+         break;
+      default:
+         break;
       }
       break;
    default:

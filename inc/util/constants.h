@@ -20,16 +20,22 @@ enum GameState {
    MAIN_MENU, PAUSE_MENU, GAMEOVER, CREDITS, GAME
 };
 
+static const int NUM_BUTTONS = 6;
 enum KeyButtons {
-   UP, LEFT, RIGHT, SPACE
+   UP, LEFT, RIGHT, SPACE, DOWN, ENTER
 };
 
 static const int NUM_MODES = 2;
-
 enum Modes {
    DEBUG, GOD
 };
 
 extern bool MODES[NUM_MODES];
+
+enum MenuAction {
+   POP,  // remove the top menu
+   PUSH, // add another menu
+   EXIT  // Exit the game
+};
 
 #endif

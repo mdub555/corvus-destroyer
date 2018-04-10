@@ -7,11 +7,11 @@
 #include "Rock.h"
 #include "Ship.h"
 #include "Bullet.h"
-#include "Util.h"
+#include "util/constants.h"
 #include "Menu.h"
 #include "PauseMenu.h"
 
-// this is here because it needs to be defined in ONE file after the declaration in Util.h
+// this is here because it needs to be defined in ONE file after the declaration in constants.h
 bool MODES[NUM_MODES];
 
 class Asteroids {
@@ -25,7 +25,7 @@ private:
    static const int NUM_LEVELS = 5;
 
    Menu *menus[4];
-   bool buttonsPressed[4];
+   bool buttonsPressed[NUM_BUTTONS];
 
    Ship ship;
    std::vector<Rock> rocks;
@@ -61,6 +61,7 @@ public:
    void draw();
    void checkEvent();
    void applyEvents();
+   void handleMenu(const GameState state, const MenuAction action, const GameState newState = GAME);
    void setFPS(int FPS);
    bool isOpen() const ;
 

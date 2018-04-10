@@ -9,6 +9,8 @@ private:
 
 public:
    PauseMenu();
+
+   MenuAction select() const;
 };
 
 #endif

@@ -1,5 +1,5 @@
 #include "Menu.h"
-#include "Util.h"
+#include "util/constants.h"
 
 #include <stdio.h>
 
@@ -29,6 +29,7 @@ void Menu::setFont(sf::Font &font) {
 }
 
 void Menu::addButton(Button *button) {
+   if (buttons.size() == 0) button->setHighlight(true);
    buttons.push_back(button);
    return;
 }
@@ -65,4 +66,24 @@ void Menu::arrangeButtons() {
       buttons[i]->Button::setPosition(WINDOW_WIDTH/2, currentY + buttons[i]->getSize().y);
       currentY += buttons[i]->getSize().y;
    }
+}
+
+void Menu::navigateUp() {
+   if (currentButton >= buttons.size()) return;
+   if (clock.getElapsedTime() < changeDelay) return;
+   clock.restart();
+   buttons[currentButton]->setHighlight(false);
+   if (currentButton == 0) currentButton = buttons.size() - 1;
+   else currentButton--;
+   buttons[currentButton]->setHighlight(true);
+}
+
+void Menu::navigateDown() {
+   if (currentButton >= buttons.size()) return;
+   if (clock.getElapsedTime() < changeDelay) return;
+   clock.restart();
+   buttons[currentButton]->setHighlight(false);
+   currentButton++;
+   if (currentButton >= buttons.size()) currentButton = 0;
+   buttons[currentButton]->setHighlight(true);
 }
