@@ -187,23 +187,21 @@ void Asteroids::checkEvent() {
          }
          break;
       case sf::Event::KeyReleased:
-         if (event.key.code == sf::Keyboard::Space) {
+         switch (event.key.code) {
+         case (sf::Keyboard::Space):
             buttonsPressed[KeyButtons::SPACE] = false;
-         }
-         if (event.key.code == sf::Keyboard::Right) {
+         case (sf::Keyboard::Right):
             buttonsPressed[KeyButtons::RIGHT] = false;
-         }
-         if (event.key.code == sf::Keyboard::Left) {
+         case (sf::Keyboard::Left):
             buttonsPressed[KeyButtons::LEFT] = false;
-         }
-         if (event.key.code == sf::Keyboard::Up) {
+         case (sf::Keyboard::Up):
             buttonsPressed[KeyButtons::UP] = false;
-         }
-         if (event.key.code == sf::Keyboard::Down) {
+         case (sf::Keyboard::Down):
             buttonsPressed[KeyButtons::DOWN] = false;
-         }
-         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+         case (sf::Keyboard::Return):
             buttonsPressed[KeyButtons::ENTER] = false;
+         default:
+            break;
          }
          break;
       default:
